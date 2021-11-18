@@ -1,0 +1,18 @@
+* {
+    text-align: center;
+}
+
+#gameboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    margin: 0 auto;
+    height: 16em;
+    max-height: 16em;
+    width: 16em;
+}
+
+.square {
+    border: 1px solid black;
+    padding: 1.2em 0;
+}

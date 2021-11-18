@@ -12,15 +12,15 @@ const createMine = () => {
     const mine = document.createElement(`img`);
     mine.setAttribute(`src`, `https://cdn.pixabay.com/photo/2017/01/31/16/59/bomb-2025548_1280.png`);
     mine.setAttribute(`class`, `mine`);
-    if (squareArray[randNum].classList.length === 1) {
-        squareArray[randNum].classList.add(`mineHere`);
+    if (squareArray[randNum].classList[1] === `empty`) {
+        squareArray[randNum].classList.replace(`empty`, `mineHere`);
         squareArray[randNum].append(mine);
     };
 };
 // Function to check number of mines in grid and set no more than 15% of board
 let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 const setMines = () => {
-    while (minePercent < .8) {
+    while (minePercent < .15) {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };

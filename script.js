@@ -17,7 +17,7 @@ const createMine = () => {
         squareArray[randNum].append(mine);
     };
 };
-// Function to check number of mines in grid and set no more than 15% of board
+// Function to check number of mines in grid and set no more than 15% or less of board
 let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 const setMines = () => {
     while (minePercent < .15) {
@@ -25,3 +25,4 @@ const setMines = () => {
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
 };
+// Function for empty squares to check number of mines adjacent to it

@@ -3,12 +3,12 @@
 }
 #gameboard {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     margin: 0 auto;
-    height: 16em;
-    max-height: 16em;
-    width: 16em;
+    height: 20em;
+    max-height: 20em;
+    width: 20em;
 }
 .square {
     border: 1px solid black;

@@ -10,13 +10,13 @@ const row3Array = document.querySelectorAll(`.row3`);
 const row4Array = document.querySelectorAll(`.row4`);
 const row5Array = document.querySelectorAll(`.row5`);
 
-
 // Functions for game logic
-// Function for random number generator from 0-15
+// Function for random number generator that ranges within squareArray.length
 const RNG = () => {
     return Math.floor(Math.random() * squareArray.length)
 };
-// Function to create and place mine in random square
+// Creates and places mines in random square to fill up no more than 15% of board
+let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 const createMine = () => {
     let randNum = RNG();
     const mine = document.createElement(`img`);
@@ -27,15 +27,13 @@ const createMine = () => {
         squareArray[randNum].append(mine);
     };
 };
-// Function to check number of mines in grid and set no more than 15% or less of board
-let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 const setMines = () => {
     while (minePercent < .15) {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
 };
-// Function for empty squares to check number of mines adjacent to it
+// Function for empty squares in row 1 to check number of mines adjacent to it
 const row1CornerCount = () => {
     for (i = 0; i < row1Array.length; i++) {
         if (row1Array[i].classList[1] === `empty`) {
@@ -100,4 +98,3 @@ row1CornerCount();
 row1CenterCountTest(mineNumArray[1], `col2`);
 row1CenterCountTest(mineNumArray[2], `col3`);
 row1CenterCountTest(mineNumArray[3], `col4`);
-console.log(mineNumArray);

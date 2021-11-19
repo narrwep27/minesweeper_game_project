@@ -97,36 +97,62 @@ const row1CenterCount = (colString, arrayInd) => {
     };
 };
 // Function for bottom row squares to check number of mines
-const lastRowCornerCount = () => {
-    for (i = 0; i < row5Array.length; i++) {
-        if (row5Array[i].classList[1] === `empty`) {
-            if (row5Array[i] === row5Array[0]) {
-                if (row4Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[20] += 1;
+const lastRowCornerCount = (rowArray, rowAbove, mineArrayIndexFirst, mineArrayIndexLast) => {
+    for (i = 0; i < rowArray.length; i++) {
+        if (rowArray[i].classList[1] === `empty`) {
+            if (rowArray[i] === rowArray[0]) {
+                if (rowAbove[i].classList[1] === `mineHere`) {
+                    mineArrayIndexFirst += 1;
                 };
-                if (row4Array[i + 1].classList[1] === `mineHere`) {
-                    mineNumArray[20] += 1;
+                if (rowAbove[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndexFirst += 1;
                 };
-                if (row5Array[i + 1].classList[1] === `mineHere`) {
-                    mineNumArray[20] += 1;
+                if (rowArray[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndexFirst += 1;
                 };
                 let mineNum = document.createElement(`h3`);
-                mineNum.innerHTML = mineNumArray[20];
-                row5Array[i].append(mineNum);
+                mineNum.innerHTML = mineArrayIndexFirst;
+                rowArray[i].append(mineNum);
             };
-            if (row5Array[i] === row5Array[row5Array.length - 1]) {
-                if (row4Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[24] += 1;
+            if (rowArray[i] === rowArray[rowArray.length - 1]) {
+                if (rowAbove[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndexLast += 1;
                 };
-                if (row4Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[24] += 1;
+                if (rowAbove[i].classList[1] === `mineHere`) {
+                    mineArrayIndexLast += 1;
                 };
-                if (row5Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[24] += 1;
+                if (rowArray[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndexLast += 1;
                 };
                 let mineNum = document.createElement(`h3`);
-                mineNum.innerHTML = mineNumArray[24];
-                row5Array[i].append(mineNum);
+                mineNum.innerHTML = mineArrayIndexLast;
+                rowArray[i].append(mineNum);
+            };
+        };
+    };
+};
+const lastRowCenterCount = (rowArray, colString, rowAbove, mineArrayIndex) => {
+    for (i = 0; i < rowArray.length; i++) {
+        if (rowArray[i].classList[1] === `empty`) {
+            if (rowArray[i].classList[3] === colString) {
+                if (rowAbove[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowAbove[i].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowAbove[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowArray[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowArray[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                let mineNum = document.createElement(`h3`);
+                mineNum.innerHTML = mineArrayIndex;
+                rowArray[i].append(mineNum);
             };
         };
     };
@@ -236,5 +262,8 @@ midCenterCount(row3Array, `col4`, row2Array, row4Array, mineNumArray[13]);
 midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[16]);
 midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[17]);
 midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[18]);
-
-lastRowCornerCount();
+// last row mine check
+lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
+lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
+lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
+lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);

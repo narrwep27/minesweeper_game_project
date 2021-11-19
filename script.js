@@ -29,14 +29,14 @@ const createMine = () => {
     };
 };
 const setMines = () => {
-    // change minePercent threshold with different difficulties
+    // Need to change minePercent threshold with different difficulties
     while (minePercent < .15) {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
 };
 // Function for empty squares in row 1 to check number of mines adjacent to it
-const row1CornerCount = () => {
+const row1CornerCount = (mineArrayIndexLast) => {
     for (i = 0; i < row1Array.length; i++) {
         if (row1Array[i].classList[1] === `empty`) {
             if (row1Array[i] === row1Array[0]) {
@@ -55,16 +55,16 @@ const row1CornerCount = () => {
             };
             if (row1Array[i] === row1Array[row1Array.length - 1]) {
                 if (row1Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[4] += 1;
+                    mineArrayIndexLast += 1;
                 };
                 if (row2Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[4] += 1;
+                    mineArrayIndexLast += 1;
                 };
                 if (row2Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[4] += 1;
+                    mineArrayIndexLast += 1;
                 };
                 let mineNum = document.createElement(`h3`);
-                mineNum.innerHTML = mineNumArray[4];
+                mineNum.innerHTML = mineArrayIndexLast;
                 row1Array[i].append(mineNum);
             };
         };
@@ -244,7 +244,7 @@ const midCenterCount = (rowArray, colString, rowAbove, rowBelow, mineArrayIndex)
 // Invoked functions and event listeners
 setMines();
 // row1 mine check
-row1CornerCount();
+row1CornerCount(mineNumArray[4]);
 row1CenterCount(`col2`, mineNumArray[1]);
 row1CenterCount(`col3`, mineNumArray[2]);
 row1CenterCount(`col4`, mineNumArray[3]);

@@ -1,9 +1,10 @@
-// Global constants
+// Global constants that remain even with changing grid sizes
 const squareArray = document.querySelectorAll(`.square`);
 const mineNumArray = [];
 mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 
+// Global constants that need updates with changing grid sizes
 const row1Array = document.querySelectorAll(`.row1`);
 const row2Array = document.querySelectorAll(`.row2`);
 const row3Array = document.querySelectorAll(`.row3`);
@@ -28,6 +29,7 @@ const createMine = () => {
     };
 };
 const setMines = () => {
+    // change minePercent threshold with different difficulties
     while (minePercent < .15) {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
@@ -68,10 +70,10 @@ const row1CornerCount = () => {
         };
     };
 };
-const row1CenterCountTest = (arrayInd, column) => {
+const row1CenterCountTest = (colString, arrayInd) => {
     for (i = 0; i < row1Array.length; i++) {
         if (row1Array[i].classList[1] === `empty`) {
-            if (row1Array[i].classList[3] === column) {
+            if (row1Array[i].classList[3] === colString) {
                 if (row1Array[i - 1].classList[1] === `mineHere`) {
                     arrayInd += 1;
                 };
@@ -94,7 +96,7 @@ const row1CenterCountTest = (arrayInd, column) => {
         };
     };
 };
-// Function for empty squares in middle rows to check number of adjacent mines
+// Function for edge squares in middle rows to check number of adjacent mines
 const midEdgeCount = (rowArray, rowAbove, rowBelow, mineArrayIndexFirst, mineArrayIndexLast) => {
     for (i = 0; i < rowArray.length; i++) {
         if (rowArray[i].classList[1] === `empty`) {
@@ -141,61 +143,61 @@ const midEdgeCount = (rowArray, rowAbove, rowBelow, mineArrayIndexFirst, mineArr
         };
     };
 };
-
-// Invoked functions and event listeners
-setMines();
-row1CornerCount();
-row1CenterCountTest(mineNumArray[1], `col2`);
-row1CenterCountTest(mineNumArray[2], `col3`);
-row1CenterCountTest(mineNumArray[3], `col4`);
-midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[5], mineNumArray[9]);
-midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[10], mineNumArray[14]);
-midEdgeCount(row4Array, row3Array, row5Array, mineNumArray[15], mineNumArray[19]);
-
-// Scratch/testing area
-const row2EdgeCount = () => {
-    for (i = 0; i < row2Array.length; i++) {
-        if (row2Array[i].classList[1] === `empty`) {
-            if (row2Array[i] === row2Array[0]) {
-                if (row1Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[5] += 1;
+// Function for center squares in middle rows to check for mines
+const midCenterCount = (rowArray, colString, rowAbove, rowBelow, mineArrayIndex) => {
+    for (i = 0; i < rowArray.length; i++) {
+        if (rowArray[i].classList[1] === `empty`) {
+            if (rowArray[i].classList[3] === colString) {
+                if (rowAbove[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
                 };
-                if (row1Array[i + 1].classList[1] === `mineHere`) {
-                    mineNumArray[5] += 1;
+                if (rowAbove[i].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
                 };
-                if (row2Array[i + 1].classList[1] === `mineHere`) {
-                    mineNumArray[5] += 1;
+                if (rowAbove[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
                 };
-                if (row3Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[5] += 1;
+                if (rowArray[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
                 };
-                if (row3Array[i + 1].classList[1] === `mineHere`) {
-                    mineNumArray[5] += 1;
+                if (rowArray[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowBelow[i - 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowBelow[i].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
+                };
+                if (rowBelow[i + 1].classList[1] === `mineHere`) {
+                    mineArrayIndex += 1;
                 };
                 let mineNum = document.createElement(`h3`);
-                mineNum.innerHTML = mineNumArray[5];
-                row2Array[i].append(mineNum);
-            };
-            if (row2Array[i] === row2Array[row2Array.length - 1]) {
-                if (row1Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[9] += 1;
-                };
-                if (row1Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[9] += 1;
-                };
-                if (row2Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[9] += 1;
-                };
-                if (row3Array[i - 1].classList[1] === `mineHere`) {
-                    mineNumArray[9] += 1;
-                };
-                if (row3Array[i].classList[1] === `mineHere`) {
-                    mineNumArray[9] += 1;
-                };
-                let mineNum = document.createElement(`h3`);
-                mineNum.innerHTML = mineNumArray[9];
-                row2Array[i].append(mineNum);
+                mineNum.innerHTML = mineArrayIndex;
+                rowArray[i].append(mineNum);
             };
         };
     };
 };
+
+// Invoked functions and event listeners
+setMines();
+// row1 mine check
+row1CornerCount();
+row1CenterCountTest(`col2`, mineNumArray[1]);
+row1CenterCountTest(`col3`, mineNumArray[2]);
+row1CenterCountTest(`col4`, mineNumArray[3]);
+// edge of middle rows mine check
+midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[5], mineNumArray[9]);
+midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[10], mineNumArray[14]);
+midEdgeCount(row4Array, row3Array, row5Array, mineNumArray[15], mineNumArray[19]);
+// center of middle rows mine check
+midCenterCount(row2Array, `col2`, row1Array, row3Array, mineNumArray[6]);
+midCenterCount(row2Array, `col3`, row1Array, row3Array, mineNumArray[7]);
+midCenterCount(row2Array, `col4`, row1Array, row3Array, mineNumArray[8]);
+midCenterCount(row3Array, `col2`, row2Array, row4Array, mineNumArray[11]);
+midCenterCount(row3Array, `col3`, row2Array, row4Array, mineNumArray[12]);
+midCenterCount(row3Array, `col4`, row2Array, row4Array, mineNumArray[13]);
+midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[16]);
+midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[17]);
+midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[18]);

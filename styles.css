@@ -24,7 +24,7 @@ h3 {
     margin: 0;
     margin-top: .4em;
 }
-#overlay {
+#gridOverlay {
     position: absolute;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -35,4 +35,9 @@ h3 {
     top: 107px;
     left: 50%;
     margin-left: -160px;
+}
+.cover {
+    display: block;
+    background-color: rgb(192,192,192,.6);
+    border: 5px outset rgb(150,150,150);
 }

@@ -3,6 +3,7 @@ const squareArray = document.querySelectorAll(`.square`);
 const mineNumArray = [];
 mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
+const coverArray = document.querySelectorAll(`.cover`);
 
 // Global constants that need updates with changing grid sizes
 const row1Array = document.querySelectorAll(`.row1`);
@@ -10,6 +11,12 @@ const row2Array = document.querySelectorAll(`.row2`);
 const row3Array = document.querySelectorAll(`.row3`);
 const row4Array = document.querySelectorAll(`.row4`);
 const row5Array = document.querySelectorAll(`.row5`);
+
+const coverRow1Array = document.querySelectorAll(`.covRow1`);
+const coverRow2Array = document.querySelectorAll(`.covRow2`);
+const coverRow3Array = document.querySelectorAll(`.covRow3`);
+const coverRow4Array = document.querySelectorAll(`.covRow4`);
+const coverRow5Array = document.querySelectorAll(`.covRow5`);
 
 // Functions for game logic
 // Function for random number generator that ranges within squareArray.length
@@ -35,7 +42,7 @@ const setMines = () => {
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
 };
-// Function for empty squares in row 1 to check number of mines adjacent to it
+// Function for empty squares in row 1 to check number of adjacent mines
 const row1CornerCount = (mineArrayIndexLast) => {
     for (i = 0; i < row1Array.length; i++) {
         if (row1Array[i].classList[1] === `empty`) {
@@ -240,6 +247,15 @@ const midCenterCount = (rowArray, colString, rowAbove, rowBelow, mineArrayIndex)
         };
     };
 };
+// Function to click cover and reveal number/mine
+const revealSquare = (coverRow) => {
+    for (i = 0; i < coverRow.length; i++) {
+        let currentCover = coverRow[i];
+        coverRow[i].addEventListener(`click`, () => {
+            currentCover.style.opacity = 0;
+        });
+    };
+};
 
 // Invoked functions and event listeners
 setMines();
@@ -267,3 +283,9 @@ lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
 lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
 lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
 lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
+// click to reveal square under cover
+revealSquare(coverRow1Array);
+revealSquare(coverRow2Array);
+revealSquare(coverRow3Array);
+revealSquare(coverRow4Array);
+revealSquare(coverRow5Array);

@@ -41,6 +41,11 @@ const setMines = () => {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
+    for (i = 0; i < squareArray.length; i++) {
+        if (squareArray[i].classList[1] === `mineHere`) {
+            coverArray[i].classList.replace(`safe`, `boom`);
+        };
+    };
 };
 // Function for empty squares in row 1 to check number of adjacent mines
 const row1CornerCount = (mineArrayIndexLast) => {

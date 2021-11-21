@@ -255,9 +255,32 @@ const midCenterCount = (rowArray, colString, rowAbove, rowBelow, mineArrayIndex)
 // Function to click cover and reveal number/mine
 const revealSquare = (coverRow) => {
     for (i = 0; i < coverRow.length; i++) {
-        let currentCover = coverRow[i];
+        let currentCoverRow = coverRow[i];
         coverRow[i].addEventListener(`click`, () => {
-            currentCover.style.opacity = 0;
+            currentCoverRow.style.visibility = `hidden`;
+        });
+    };
+};
+// Lose condition
+const loseCondition = () => {
+    const boomCovers = document.querySelectorAll(`.boom`);
+    for (i = 0; i < boomCovers.length; i++) {
+        boomCovers[i].addEventListener(`click`, () => {
+            console.log(`you lose`);
+        });
+    };
+};
+// Win condition
+const winCondition = () => {
+    const safeNum = document.querySelectorAll(`.safe`).length;
+    const safeCovers = document.querySelectorAll(`.safe`);
+    let safeClickedNum = 0;
+    for (i = 0; i < safeCovers.length; i++) {
+        safeCovers[i].addEventListener(`click`, () => {
+            safeClickedNum += 1;
+            if (safeClickedNum === safeNum) {
+                console.log(`you win`);
+            };
         });
     };
 };
@@ -294,3 +317,6 @@ revealSquare(coverRow2Array);
 revealSquare(coverRow3Array);
 revealSquare(coverRow4Array);
 revealSquare(coverRow5Array);
+// win/lose conditions
+loseCondition();
+winCondition();

@@ -16,8 +16,12 @@ h1 {
     border: 1px solid black;
     padding: .7em 0;
 }
-img {
+.mine {
     max-width: 2em;
+    top: 20%;
+}
+.redFlag {
+    max-width: 2.5em;
     top: 20%;
 }
 h3 {
@@ -38,6 +42,7 @@ h3 {
 }
 .cover {
     display: block;
-    background-color: rgb(192,192,192,.6);
+    background-color: rgb(192,192,192,.7);
     border: 5px outset rgb(150,150,150);
+    padding: 3px 0;
 }

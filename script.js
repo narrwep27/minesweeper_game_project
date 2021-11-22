@@ -253,11 +253,13 @@ const midCenterCount = (rowArray, colString, rowAbove, rowBelow, mineArrayIndex)
     };
 };
 // Function to click cover and reveal number/mine
-const revealSquare = (coverRow) => {
-    for (i = 0; i < coverRow.length; i++) {
-        let currentCoverRow = coverRow[i];
-        coverRow[i].addEventListener(`click`, () => {
-            currentCoverRow.style.visibility = `hidden`;
+const revealSquare = () => {
+    for (i = 0; i < coverArray.length; i++) {
+        let currentCover = coverArray[i];
+        coverArray[i].addEventListener(`click`, () => {
+            if (currentCover.classList[2] === `unflagged`) {
+                currentCover.style.visibility = `hidden`;
+            };
         });
     };
 };
@@ -280,6 +282,25 @@ const winCondition = () => {
             safeClickedNum += 1;
             if (safeClickedNum === safeNum) {
                 console.log(`you win`);
+            };
+        });
+    };
+};
+// Function for right-click setting flags onto overlay covers
+const setFlag = () => {
+    for (i = 0; i < coverArray.length; i++) {
+        let currentCover = coverArray[i];
+        const flag = document.createElement(`img`);
+        flag.setAttribute(`src`, `http://clipart-library.com/images_k/red-flag-transparent-background/red-flag-transparent-background-1.png`);
+        flag.setAttribute(`class`, `redFlag`);
+        coverArray[i].addEventListener(`contextmenu`, (event) => {
+            event.preventDefault();
+            if (currentCover.classList[2] === `unflagged`) {
+                currentCover.classList.replace(`unflagged`, `flagged`)
+                currentCover.append(flag);
+            } else if (currentCover.classList[2] === `flagged`) {
+                currentCover.classList.replace(`flagged`, `unflagged`);
+                flag.remove();
             };
         });
     };
@@ -312,11 +333,9 @@ lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
 lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
 lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
 // click to reveal square under cover
-revealSquare(coverRow1Array);
-revealSquare(coverRow2Array);
-revealSquare(coverRow3Array);
-revealSquare(coverRow4Array);
-revealSquare(coverRow5Array);
+revealSquare();
 // win/lose conditions
 loseCondition();
 winCondition();
+// click to set flags overtop of covers
+setFlag();

@@ -20,4 +20,6 @@ Minesweepers is a simple but challenging game. Players click on a square to reve
 ### ***Credits***
 - Minesweeper Information: [Minesweeper Online](https://minesweeper.online/)
 - GA Provided Markdown Cheatsheet: [Markdown Cheatsheet PDF](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
+- Mine Image: [Pixabay Bomb Image](https://pixabay.com/vectors/bomb-cartoon-iconic-2025548/)
+- Flag Image: [Clipart-Library Red Flag Image](http://clipart-library.com/clip-art/red-flag-transparent-background-1.htm)
 ***

@@ -4,6 +4,7 @@ const mineNumArray = [];
 mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 const coverArray = document.querySelectorAll(`.cover`);
+const flagCoverArray = document.querySelectorAll(`.flagCover`);
 const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
 let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 
@@ -254,20 +255,43 @@ const midCenterCount = (rowArray, colString, rowAbove, rowBelow, mineArrayIndex)
     };
 };
 // Function to click cover and reveal number/mine
-const revealSquare = () => {
+// const revealSquare = () => {
+//     for (i = 0; i < coverArray.length; i++) {
+//         let currentCover = coverArray[i];
+//         coverArray[i].addEventListener(`click`, () => {
+//             if (currentCover.classList[2] === `unflagged`) {
+//                 currentCover.style.visibility = `hidden`;
+//             };
+//         });
+//     };
+// };
+const revealAndFlag = () => {
     for (i = 0; i < coverArray.length; i++) {
         let currentCover = coverArray[i];
-        coverArray[i].addEventListener(`click`, () => {
+        const hideCover = () => {
+            currentCover.style.visibility = `hidden`;
+        };
+        coverArray[i].addEventListener(`click`, hideCover)
+        coverArray[i].addEventListener(`contextmenu`, () => {
             if (currentCover.classList[2] === `unflagged`) {
-                currentCover.style.visibility = `hidden`;
+                const flag = document.createElement(`img`);
+                flag.setAttribute(`src`, `http://clipart-library.com/images_k/red-flag-transparent-background/red-flag-transparent-background-1.png`);
+                flag.setAttribute(`class`, `redFlag`);
+                currentCover.classList.replace(`unflagged`, `flagged`)
+                currentCover.append(flag);
+                currentCover.removeEventListener(`click`, hideCover);
+            } else if (currentCover.classList[2] === `flagged`) {
+                currentCover.classList.replace(`flagged`, `unflagged`);
+                document.querySelector(`.redFlag`).remove();
+                currentCover.addEventListener(`click`, hideCover);
             };
         });
     };
 };
 // Function for win/lose condition
 const winLoseCondition = () => {
-    const safeCovers = document.querySelectorAll(`.safe`);
-    const safeNum = safeCovers.length;
+    let safeCovers = document.querySelectorAll(`.safe`);
+    let safeNum = safeCovers.length;
     let safeClickedNum = 0;
     let boomCovers = document.querySelectorAll(`.boom`);
     const loseDisplay = () => {
@@ -296,25 +320,6 @@ const winLoseCondition = () => {
         safeCovers[i].addEventListener(`click`, winDisplay);
     };
 };
-// Function for right-click setting flags onto overlay covers
-const setFlag = () => {
-    for (i = 0; i < coverArray.length; i++) {
-        let currentCover = coverArray[i];
-        const flag = document.createElement(`img`);
-        flag.setAttribute(`src`, `http://clipart-library.com/images_k/red-flag-transparent-background/red-flag-transparent-background-1.png`);
-        flag.setAttribute(`class`, `redFlag`);
-        coverArray[i].addEventListener(`contextmenu`, (event) => {
-            event.preventDefault();
-            if (currentCover.classList[2] === `unflagged`) {
-                currentCover.classList.replace(`unflagged`, `flagged`)
-                currentCover.append(flag);
-            } else if (currentCover.classList[2] === `flagged`) {
-                currentCover.classList.replace(`flagged`, `unflagged`);
-                flag.remove();
-            };
-        });
-    };
-};
 // Function for game reset
 const gameReset = () => {
     for (i = 0; i < squareArray.length; i++) {
@@ -329,8 +334,7 @@ const gameReset = () => {
     document.querySelector(`#gameEndDisplay`).style.display = `none`;
     gameStart();
 };
-
-// Invoked functions and event listeners
+// Function to start game
 const gameStart = () => {
     setMines();
     // row1 mine check
@@ -357,12 +361,14 @@ const gameStart = () => {
     lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
     lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
     lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
-    // click to reveal square under cover
-    revealSquare();
     // win/lose conditions
     winLoseCondition();
-    // click to set flags overtop of covers
-    setFlag();
 };
+
+// Invoked functions and event listeners
 gameStart();
+revealAndFlag();
+document.querySelector(`#gridOverlay`).addEventListener(`contextmenu`, (event) => {
+    event.preventDefault();
+});
 document.querySelector(`button`).addEventListener(`click`, gameReset);

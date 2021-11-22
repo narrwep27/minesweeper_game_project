@@ -5,6 +5,7 @@ mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 const coverArray = document.querySelectorAll(`.cover`);
 const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
+let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 
 // Global constants that need updates with changing grid sizes
 const row1Array = document.querySelectorAll(`.row1`);
@@ -25,7 +26,6 @@ const RNG = () => {
     return Math.floor(Math.random() * squareArray.length)
 };
 // Creates and places mines in random square to fill up no more than 12%(easy) and 16%(hard) of board
-let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 const createMine = () => {
     let randNum = RNG();
     const mine = document.createElement(`img`);
@@ -264,29 +264,36 @@ const revealSquare = () => {
         });
     };
 };
-// Lose condition
-const loseCondition = () => {
-    const boomCovers = document.querySelectorAll(`.boom`);
-    for (i = 0; i < boomCovers.length; i++) {
-        boomCovers[i].addEventListener(`click`, () => {
-            document.querySelector(`#gameEndDisplay`).style.display = `block`;
-            document.querySelector(`#gameEndText`).innerHTML = `You stepped on a mine...`;
-        });
-    };
-};
-// Win condition
-const winCondition = () => {
-    const safeNum = document.querySelectorAll(`.safe`).length;
+// Function for win/lose condition
+const winLoseCondition = () => {
     const safeCovers = document.querySelectorAll(`.safe`);
+    const safeNum = safeCovers.length;
     let safeClickedNum = 0;
-    for (i = 0; i < safeCovers.length; i++) {
-        safeCovers[i].addEventListener(`click`, () => {
-            safeClickedNum += 1;
-            if (safeClickedNum === safeNum) {
-                document.querySelector(`#gameEndDisplay`).style.display = `block`;
-                document.querySelector(`#gameEndText`).innerHTML = `You found all the mines!`;
+    let boomCovers = document.querySelectorAll(`.boom`);
+    const loseDisplay = () => {
+        document.querySelector(`#gameEndDisplay`).style.display = `block`;
+        document.querySelector(`#gameEndText`).innerHTML = `You stepped on a mine...`;
+        for (i = 0; i < coverArray.length; i++) {
+            coverArray[i].removeEventListener(`click`, loseDisplay);
+            coverArray[i].removeEventListener(`click`, winDisplay);
+        };
+    };
+    const winDisplay = () => {
+        safeClickedNum += 1;
+        if (safeClickedNum === safeNum) {
+            document.querySelector(`#gameEndDisplay`).style.display = `block`;
+            document.querySelector(`#gameEndText`).innerHTML = `You found all the mines!`;
+            for (i = 0; i < coverArray.length; i++) {
+                coverArray[i].removeEventListener(`click`, loseDisplay);
+                coverArray[i].removeEventListener(`click`, winDisplay);
             };
-        });
+        };
+    };
+    for (i = 0; i < boomCovers.length; i++) {
+        boomCovers[i].addEventListener(`click`, loseDisplay);
+    };
+    for (i = 0; i < safeCovers.length; i++) {
+        safeCovers[i].addEventListener(`click`, winDisplay);
     };
 };
 // Function for right-click setting flags onto overlay covers
@@ -313,44 +320,49 @@ const gameReset = () => {
     for (i = 0; i < squareArray.length; i++) {
         squareArray[i].classList.replace(`mineHere`, `empty`);
         squareArray[i].innerHTML = ``;
+        minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
         coverArray[i].style.visibility = `visible`;
         coverArray[i].classList.replace(`flagged`, `unflagged`);
+        coverArray[i].classList.replace(`boom`, `safe`);
         coverArray[i].innerHTML = ``;
     };
     document.querySelector(`#gameEndDisplay`).style.display = `none`;
+    gameStart();
 };
-document.querySelector(`button`).addEventListener(`click`, gameReset);
 
 // Invoked functions and event listeners
-setMines();
-// row1 mine check
-row1CornerCount(mineNumArray[4]);
-row1CenterCount(`col2`, mineNumArray[1]);
-row1CenterCount(`col3`, mineNumArray[2]);
-row1CenterCount(`col4`, mineNumArray[3]);
-// edge of middle rows mine check
-midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[5], mineNumArray[9]);
-midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[10], mineNumArray[14]);
-midEdgeCount(row4Array, row3Array, row5Array, mineNumArray[15], mineNumArray[19]);
-// center of middle rows mine check
-midCenterCount(row2Array, `col2`, row1Array, row3Array, mineNumArray[6]);
-midCenterCount(row2Array, `col3`, row1Array, row3Array, mineNumArray[7]);
-midCenterCount(row2Array, `col4`, row1Array, row3Array, mineNumArray[8]);
-midCenterCount(row3Array, `col2`, row2Array, row4Array, mineNumArray[11]);
-midCenterCount(row3Array, `col3`, row2Array, row4Array, mineNumArray[12]);
-midCenterCount(row3Array, `col4`, row2Array, row4Array, mineNumArray[13]);
-midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[16]);
-midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[17]);
-midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[18]);
-// last row mine check
-lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
-lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
-lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
-lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
-// click to reveal square under cover
-revealSquare();
-// win/lose conditions
-loseCondition();
-winCondition();
-// click to set flags overtop of covers
-setFlag();
+const gameStart = () => {
+    setMines();
+    // row1 mine check
+    row1CornerCount(mineNumArray[4]);
+    row1CenterCount(`col2`, mineNumArray[1]);
+    row1CenterCount(`col3`, mineNumArray[2]);
+    row1CenterCount(`col4`, mineNumArray[3]);
+    // edge of middle rows mine check
+    midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[5], mineNumArray[9]);
+    midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[10], mineNumArray[14]);
+    midEdgeCount(row4Array, row3Array, row5Array, mineNumArray[15], mineNumArray[19]);
+    // center of middle rows mine check
+    midCenterCount(row2Array, `col2`, row1Array, row3Array, mineNumArray[6]);
+    midCenterCount(row2Array, `col3`, row1Array, row3Array, mineNumArray[7]);
+    midCenterCount(row2Array, `col4`, row1Array, row3Array, mineNumArray[8]);
+    midCenterCount(row3Array, `col2`, row2Array, row4Array, mineNumArray[11]);
+    midCenterCount(row3Array, `col3`, row2Array, row4Array, mineNumArray[12]);
+    midCenterCount(row3Array, `col4`, row2Array, row4Array, mineNumArray[13]);
+    midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[16]);
+    midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[17]);
+    midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[18]);
+    // last row mine check
+    lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
+    lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
+    lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
+    lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
+    // click to reveal square under cover
+    revealSquare();
+    // win/lose conditions
+    winLoseCondition();
+    // click to set flags overtop of covers
+    setFlag();
+};
+gameStart();
+document.querySelector(`button`).addEventListener(`click`, gameReset);

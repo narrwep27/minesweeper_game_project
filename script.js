@@ -1,9 +1,10 @@
-// Global constants that remain even with changing grid sizes
+// Global constants that remain with changing grid sizes
 const squareArray = document.querySelectorAll(`.square`);
 const mineNumArray = [];
 mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 const coverArray = document.querySelectorAll(`.cover`);
+const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
 
 // Global constants that need updates with changing grid sizes
 const row1Array = document.querySelectorAll(`.row1`);
@@ -23,7 +24,7 @@ const coverRow5Array = document.querySelectorAll(`.covRow5`);
 const RNG = () => {
     return Math.floor(Math.random() * squareArray.length)
 };
-// Creates and places mines in random square to fill up no more than 15% of board
+// Creates and places mines in random square to fill up no more than 12%(easy) and 16%(hard) of board
 let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
 const createMine = () => {
     let randNum = RNG();
@@ -37,7 +38,7 @@ const createMine = () => {
 };
 const setMines = () => {
     // Need to change minePercent threshold with different difficulties
-    while (minePercent < .15) {
+    while (minePercent < .12) {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
@@ -268,7 +269,8 @@ const loseCondition = () => {
     const boomCovers = document.querySelectorAll(`.boom`);
     for (i = 0; i < boomCovers.length; i++) {
         boomCovers[i].addEventListener(`click`, () => {
-            console.log(`you lose`);
+            document.querySelector(`#gameEndDisplay`).style.display = `block`;
+            document.querySelector(`#gameEndText`).innerHTML = `You stepped on a mine...`;
         });
     };
 };
@@ -281,7 +283,8 @@ const winCondition = () => {
         safeCovers[i].addEventListener(`click`, () => {
             safeClickedNum += 1;
             if (safeClickedNum === safeNum) {
-                console.log(`you win`);
+                document.querySelector(`#gameEndDisplay`).style.display = `block`;
+                document.querySelector(`#gameEndText`).innerHTML = `You found all the mines!`;
             };
         });
     };
@@ -305,6 +308,18 @@ const setFlag = () => {
         });
     };
 };
+// Function for game reset
+const gameReset = () => {
+    for (i = 0; i < squareArray.length; i++) {
+        squareArray[i].classList.replace(`mineHere`, `empty`);
+        squareArray[i].innerHTML = ``;
+        coverArray[i].style.visibility = `visible`;
+        coverArray[i].classList.replace(`flagged`, `unflagged`);
+        coverArray[i].innerHTML = ``;
+    };
+    document.querySelector(`#gameEndDisplay`).style.display = `none`;
+};
+document.querySelector(`button`).addEventListener(`click`, gameReset);
 
 // Invoked functions and event listeners
 setMines();

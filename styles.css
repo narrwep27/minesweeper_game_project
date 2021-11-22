@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap');
+
 * {
     text-align: center;
+    font-family: 'Oxygen', sans-serif;
 }
 h1 {
     margin: 35px;
@@ -10,15 +13,16 @@ h1 {
     grid-template-rows: repeat(5, 1fr);
     margin: 0 auto;
     height: 20em;
+    max-height: 20em;
     width: 20em;
 }
 .square, .cover {
     border: 1px solid black;
-    padding: .7em 0;
+    padding: .4em 0;
 }
 .mine {
     max-width: 2em;
-    top: 20%;
+    margin-top: .4em;
 }
 .redFlag {
     max-width: 2.5em;
@@ -26,7 +30,7 @@ h1 {
 }
 h3 {
     margin: 0;
-    margin-top: .4em;
+    margin-top: .6em;
 }
 #gridOverlay {
     position: absolute;
@@ -36,13 +40,31 @@ h3 {
     margin: 0 auto;
     height: 20em;
     width: 20em;
-    top: 107px;
+    top: 111px;
     left: 50%;
     margin-left: -160px;
 }
 .cover {
     display: block;
-    background-color: rgb(192,192,192,.7);
+    background-color: rgb(192,192,192,.6);
     border: 5px outset rgb(150,150,150);
     padding: 3px 0;
+}
+#gameEndDisplay {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(0,0,0,.2);
+}
+#gameEndBox {
+    background-color: white;
+    position: absolute;
+    border: 1px solid black;
+    width: 250px;
+    height: 200px;
+    margin-left: -135px;
+    top: 140px;
+    left: 50%;
 }

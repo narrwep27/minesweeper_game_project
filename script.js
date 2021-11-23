@@ -320,6 +320,27 @@ const winDisplay = () => {
         });
     };
 };
+// Function for changing number colors
+const numColors = () => {
+    let numTexts = document.querySelectorAll(`.square h3`);
+    for (i = 0; i < numTexts.length; i++) {
+        if (numTexts[i].innerHTML === `1`) {
+            numTexts[i].style.color = `blue`;
+        } else if (numTexts[i].innerHTML === `2`) {
+            numTexts[i].style.color = `green`;
+        } else if (numTexts[i].innerHTML === `3`) {
+            numTexts[i].style.color = `red`;
+        } else if (numTexts[i].innerHTML === `4`) {
+            numTexts[i].style.color = `darkblue`;
+        } else if (numTexts[i].innerHTML === `5`) {
+            numTexts[i].style.color = `darkred`;
+        } else if (numTexts[i].innerHTML === `6`) {
+            numTexts[i].style.color = `teal`;
+        } else if (numTexts[i].innerHTML === `8`) {
+            numTexts[i].style.color = `gray`;
+        };
+    };
+};
 // Unsuccesful attempt at using flags to make covers unclickable; will return to sort out later
 // const winLoseCondition = () => {
 //     let safeCovers = document.querySelectorAll(`.safe`);
@@ -385,6 +406,8 @@ const gameStart = () => {
     makeWinArray()
     winDisplay();
     loseDisplay();
+    // Adjust number colors
+    numColors();
 };
 // Function for game reset/Need to fix bugs
 // const gameReset = () => {

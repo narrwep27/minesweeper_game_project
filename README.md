@@ -15,11 +15,12 @@ Minesweepers is a simple but challenging game. Players click on a square to reve
 - A link to the Trello that I used for this project can ve found [here](https://trello.com/b/ZMdrcXqs/ga-project-1-minesweeper).
 - To view and play the game, `fork` and `clone` this repo.
 - Open the `index.html` in your browser to try it out!
+- You can also play it on surge: [Surge Project Site](npark-minesweeper3.surge.sh)
 ***
 
 ### ***Credits***
 - Minesweeper Information: [Minesweeper Online](https://minesweeper.online/)
 - GA Provided Markdown Cheatsheet: [Markdown Cheatsheet PDF](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
 - Mine Image: [Pixabay Bomb Image](https://pixabay.com/vectors/bomb-cartoon-iconic-2025548/)
-- Flag Image: [Clipart-Library Red Flag Image](http://clipart-library.com/clip-art/red-flag-transparent-background-1.htm)
+- Flag Image: [CLEANPNG](https://www.cleanpng.com/png-red-flag-white-flag-clip-art-red-flag-1351736/)
 ***

@@ -15,12 +15,20 @@ const row2Array = document.querySelectorAll(`.row2`);
 const row3Array = document.querySelectorAll(`.row3`);
 const row4Array = document.querySelectorAll(`.row4`);
 const row5Array = document.querySelectorAll(`.row5`);
+const row6Array = document.querySelectorAll(`.row6`);
+const row7Array = document.querySelectorAll(`.row7`);
+const row8Array = document.querySelectorAll(`.row8`);
+const row9Array = document.querySelectorAll(`.row9`);
 
 const coverRow1Array = document.querySelectorAll(`.covRow1`);
 const coverRow2Array = document.querySelectorAll(`.covRow2`);
 const coverRow3Array = document.querySelectorAll(`.covRow3`);
 const coverRow4Array = document.querySelectorAll(`.covRow4`);
 const coverRow5Array = document.querySelectorAll(`.covRow5`);
+const coverRow6Array = document.querySelectorAll(`.covRow6`);
+const coverRow7Array = document.querySelectorAll(`.covRow7`);
+const coverRow8Array = document.querySelectorAll(`.covRow8`);
+const coverRow9Array = document.querySelectorAll(`.covRow9`);
 
 // Functions for game logic
 // Function for random number generator that ranges within squareArray.length
@@ -40,7 +48,7 @@ const createMine = () => {
 };
 const setMines = () => {
     // Need to change minePercent threshold with different difficulties
-    while (minePercent < .12) {
+    while (minePercent < .15) {
         createMine();
         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
     };
@@ -315,91 +323,94 @@ const winDisplay = () => {
             if (arraysEqual(coversClickedArray, winArray)) {
                 document.querySelector(`#gameEndDisplay`).style.display = `block`;
                 document.querySelector(`#gameEndText`).innerHTML = `You cleared all the mines!`;
-                document.querySelector(`#highDiff`).style.visibility = `visible`;
             };
         });
     };
 };
-// Unsuccesful attempt at using flags to make covers unclickable; will return to sort out later
-// const winLoseCondition = () => {
-//     let safeCovers = document.querySelectorAll(`.safe`);
-//     let safeClickedNum = 0;
-//     let boomCovers = document.querySelectorAll(`.boom`);
-//     const loseDisplay = () => {
-//         document.querySelector(`#gameEndDisplay`).style.display = `block`;
-//         document.querySelector(`#gameEndText`).innerHTML = `You stepped on a mine...`;
-//         for (i = 0; i < coverArray.length; i++) {
-//             coverArray[i].removeEventListener(`click`, loseDisplay);
-//             coverArray[i].removeEventListener(`click`, winDisplay);
-//         };
-//     };
-//     const winDisplay = () => {
-//         safeClickedNum += 1;
-//         if (safeClickedNum === safeCovers.length) {
-//             document.querySelector(`#gameEndDisplay`).style.display = `block`;
-//             document.querySelector(`#gameEndText`).innerHTML = `You found all the mines!`;
-//             for (i = 0; i < coverArray.length; i++) {
-//                 coverArray[i].removeEventListener(`click`, loseDisplay);
-//                 coverArray[i].removeEventListener(`click`, winDisplay);
-//             };
-//         };
-//     };
-//     for (i = 0; i < document.querySelectorAll(`.boom`).length; i++) {
-//         let currentBoomCover = boomCovers[i];
-//         currentBoomCover.addEventListener(`click`, loseDisplay);
-//     };
-//     for (i = 0; i < safeCovers.length; i++) {
-//         let currentSafeCover = safeCovers[i];
-//         currentSafeCover.addEventListener(`click`, winDisplay);
-//     };
-// };
-
 // Function to start game
 const gameStart = () => {
     setMines();
     // row1 mine check
-    row1CornerCount(mineNumArray[4]);
+    row1CornerCount(mineNumArray[8]);
     row1CenterCount(`col2`, mineNumArray[1]);
     row1CenterCount(`col3`, mineNumArray[2]);
     row1CenterCount(`col4`, mineNumArray[3]);
+    row1CenterCount(`col5`, mineNumArray[4]);
+    row1CenterCount(`col6`, mineNumArray[5]);
+    row1CenterCount(`col7`, mineNumArray[6]);
+    row1CenterCount(`col8`, mineNumArray[7]);
     // edge of middle rows mine check
-    midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[5], mineNumArray[9]);
-    midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[10], mineNumArray[14]);
-    midEdgeCount(row4Array, row3Array, row5Array, mineNumArray[15], mineNumArray[19]);
+    midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[9], mineNumArray[17]);
+    midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[18], mineNumArray[26]);
+    midEdgeCount(row4Array, row3Array, row5Array, mineNumArray[27], mineNumArray[35]);
+    midEdgeCount(row5Array, row4Array, row6Array, mineNumArray[36], mineNumArray[44]);
+    midEdgeCount(row6Array, row5Array, row7Array, mineNumArray[45], mineNumArray[53]);
+    midEdgeCount(row7Array, row6Array, row8Array, mineNumArray[54], mineNumArray[62]);
+    midEdgeCount(row8Array, row7Array, row9Array, mineNumArray[63], mineNumArray[71]);
     // center of middle rows mine check
-    midCenterCount(row2Array, `col2`, row1Array, row3Array, mineNumArray[6]);
-    midCenterCount(row2Array, `col3`, row1Array, row3Array, mineNumArray[7]);
-    midCenterCount(row2Array, `col4`, row1Array, row3Array, mineNumArray[8]);
-    midCenterCount(row3Array, `col2`, row2Array, row4Array, mineNumArray[11]);
-    midCenterCount(row3Array, `col3`, row2Array, row4Array, mineNumArray[12]);
-    midCenterCount(row3Array, `col4`, row2Array, row4Array, mineNumArray[13]);
-    midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[16]);
-    midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[17]);
-    midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[18]);
+    midCenterCount(row2Array, `col2`, row1Array, row3Array, mineNumArray[10]);
+    midCenterCount(row2Array, `col3`, row1Array, row3Array, mineNumArray[11]);
+    midCenterCount(row2Array, `col4`, row1Array, row3Array, mineNumArray[12]);
+    midCenterCount(row2Array, `col5`, row1Array, row3Array, mineNumArray[13]);
+    midCenterCount(row2Array, `col6`, row1Array, row3Array, mineNumArray[14]);
+    midCenterCount(row2Array, `col7`, row1Array, row3Array, mineNumArray[15]);
+    midCenterCount(row2Array, `col8`, row1Array, row3Array, mineNumArray[16]);
+    midCenterCount(row3Array, `col2`, row2Array, row4Array, mineNumArray[19]);
+    midCenterCount(row3Array, `col3`, row2Array, row4Array, mineNumArray[20]);
+    midCenterCount(row3Array, `col4`, row2Array, row4Array, mineNumArray[21]);
+    midCenterCount(row3Array, `col5`, row2Array, row4Array, mineNumArray[22]);
+    midCenterCount(row3Array, `col6`, row2Array, row4Array, mineNumArray[23]);
+    midCenterCount(row3Array, `col7`, row2Array, row4Array, mineNumArray[24]);
+    midCenterCount(row3Array, `col8`, row2Array, row4Array, mineNumArray[25]);
+    midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[28]);
+    midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[29]);
+    midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[30]);
+    midCenterCount(row4Array, `col5`, row3Array, row5Array, mineNumArray[31]);
+    midCenterCount(row4Array, `col6`, row3Array, row5Array, mineNumArray[32]);
+    midCenterCount(row4Array, `col7`, row3Array, row5Array, mineNumArray[33]);
+    midCenterCount(row4Array, `col8`, row3Array, row5Array, mineNumArray[34]);
+    midCenterCount(row5Array, `col2`, row4Array, row6Array, mineNumArray[37]);
+    midCenterCount(row5Array, `col3`, row4Array, row6Array, mineNumArray[38]);
+    midCenterCount(row5Array, `col4`, row4Array, row6Array, mineNumArray[39]);
+    midCenterCount(row5Array, `col5`, row4Array, row6Array, mineNumArray[40]);
+    midCenterCount(row5Array, `col6`, row4Array, row6Array, mineNumArray[41]);
+    midCenterCount(row5Array, `col7`, row4Array, row6Array, mineNumArray[42]);
+    midCenterCount(row5Array, `col8`, row4Array, row6Array, mineNumArray[43]);
+    midCenterCount(row6Array, `col2`, row5Array, row7Array, mineNumArray[46]);
+    midCenterCount(row6Array, `col3`, row5Array, row7Array, mineNumArray[47]);
+    midCenterCount(row6Array, `col4`, row5Array, row7Array, mineNumArray[48]);
+    midCenterCount(row6Array, `col5`, row5Array, row7Array, mineNumArray[49]);
+    midCenterCount(row6Array, `col6`, row5Array, row7Array, mineNumArray[50]);
+    midCenterCount(row6Array, `col7`, row5Array, row7Array, mineNumArray[51]);
+    midCenterCount(row6Array, `col8`, row5Array, row7Array, mineNumArray[52]);
+    midCenterCount(row7Array, `col2`, row6Array, row8Array, mineNumArray[55]);
+    midCenterCount(row7Array, `col3`, row6Array, row8Array, mineNumArray[56]);
+    midCenterCount(row7Array, `col4`, row6Array, row8Array, mineNumArray[57]);
+    midCenterCount(row7Array, `col5`, row6Array, row8Array, mineNumArray[58]);
+    midCenterCount(row7Array, `col6`, row6Array, row8Array, mineNumArray[59]);
+    midCenterCount(row7Array, `col7`, row6Array, row8Array, mineNumArray[60]);
+    midCenterCount(row7Array, `col8`, row6Array, row8Array, mineNumArray[61]);
+    midCenterCount(row8Array, `col2`, row7Array, row9Array, mineNumArray[64]);
+    midCenterCount(row8Array, `col3`, row7Array, row9Array, mineNumArray[65]);
+    midCenterCount(row8Array, `col4`, row7Array, row9Array, mineNumArray[66]);
+    midCenterCount(row8Array, `col5`, row7Array, row9Array, mineNumArray[67]);
+    midCenterCount(row8Array, `col6`, row7Array, row9Array, mineNumArray[68]);
+    midCenterCount(row8Array, `col7`, row7Array, row9Array, mineNumArray[69]);
+    midCenterCount(row8Array, `col8`, row7Array, row9Array, mineNumArray[70]);
     // last row mine check
-    lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
-    lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
-    lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
-    lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
+    lastRowCornerCount(row9Array, row8Array, mineNumArray[72], mineNumArray[80]);
+    lastRowCenterCount(row9Array, `col2`, row8Array, mineNumArray[73]);
+    lastRowCenterCount(row9Array, `col3`, row8Array, mineNumArray[74]);
+    lastRowCenterCount(row9Array, `col4`, row8Array, mineNumArray[75]);
+    lastRowCenterCount(row9Array, `col5`, row8Array, mineNumArray[76]);
+    lastRowCenterCount(row9Array, `col6`, row8Array, mineNumArray[77]);
+    lastRowCenterCount(row9Array, `col7`, row8Array, mineNumArray[78]);
+    lastRowCenterCount(row9Array, `col8`, row8Array, mineNumArray[79]);
     // win/lose conditions
     makeWinArray()
     winDisplay();
     loseDisplay();
 };
-// Function for game reset/Need to fix bugs
-// const gameReset = () => {
-//     for (i = 0; i < squareArray.length; i++) {
-//         squareArray[i].classList.replace(`mineHere`, `empty`);
-//         squareArray[i].innerHTML = ``;
-//         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
-//         coverArray[i].style.visibility = `visible`;
-//         coverArray[i].classList.replace(`flagged`, `unflagged`);
-//         coverArray[i].classList.replace(`boom`, `safe`);
-//         redFlagArray[i].classList.replace(`show`,`hide`);
-//     };
-//     document.querySelector(`#gameEndDisplay`).style.display = `none`;
-//     gameStart();
-// };
 
 // Invoked functions and event listeners
 gameStart();

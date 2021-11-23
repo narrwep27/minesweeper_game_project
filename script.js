@@ -341,6 +341,23 @@ const numColors = () => {
         };
     };
 };
+// Function for stopwatch
+let timePassed = 0;
+let timeStarted = true;
+const addSec = () => {
+    timePassed += 1;
+    document.querySelector(`.stopwatch p`).innerHTML = timePassed+` sec`;
+};
+const stopwatchStart = () => {
+    if (timeStarted === true) {
+        setInterval(addSec, 1000);
+        console.log(`stopwatch started`);
+        timeStarted = false;
+    };
+};
+for (i = 0; i < coverArray.length; i++) {
+    coverArray[i].addEventListener(`click`, stopwatchStart);
+};
 // Unsuccesful attempt at using flags to make covers unclickable; will return to sort out later
 // const winLoseCondition = () => {
 //     let safeCovers = document.querySelectorAll(`.safe`);

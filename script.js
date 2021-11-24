@@ -5,9 +5,14 @@ mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 const coverArray = document.querySelectorAll(`.cover`);
 const redFlagArray = document.querySelectorAll(`.redFlag`);
-const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
 let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
+// Game end variables
 let winArray = [];
+const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
+// Timer global variables
+let timePassed = 0;
+let timeStarted = true;
+let swFunctionVar = null;
 
 // Global constants that need updates with changing grid sizes
 const row1Array = document.querySelectorAll(`.row1`);
@@ -301,6 +306,8 @@ const loseDisplay = () => {
         boomCovers[i].addEventListener(`click`, () => {
             document.querySelector(`#gameEndDisplay`).style.display = `block`;
             document.querySelector(`#gameEndText`).innerHTML  = `You stepped on a mine...`;
+            document.querySelector(`#lossEmoji`).style.display = `block`;
+            swStop();
         });
     };
 };
@@ -316,6 +323,8 @@ const winDisplay = () => {
                 document.querySelector(`#gameEndDisplay`).style.display = `block`;
                 document.querySelector(`#gameEndText`).innerHTML = `You cleared all the mines!`;
                 document.querySelector(`#highDiff`).style.visibility = `visible`;
+                document.querySelector(`#winEmoji`).style.display = `block`;
+                swStop();
             };
         });
     };
@@ -341,23 +350,25 @@ const numColors = () => {
         };
     };
 };
-// Function for stopwatch
-// let timePassed = 0;
-// let timeStarted = true;
-// const addSec = () => {
-//     timePassed += 1;
-//     document.querySelector(`.stopwatch p`).innerHTML = timePassed+` sec`;
-// };
-// const stopwatchStart = () => {
-//     if (timeStarted === true) {
-//         setInterval(addSec, 1000);
-//         console.log(`stopwatch started`);
-//         timeStarted = false;
-//     };
-// };
-// for (i = 0; i < coverArray.length; i++) {
-//     coverArray[i].addEventListener(`click`, stopwatchStart);
-// };
+// Functions for stopwatch
+const addSec = () => {
+    timePassed += 1;
+    document.querySelector(`.stopwatch p`).innerHTML = timePassed + ` sec`;
+};
+const swStart = () => {
+    if (timeStarted === true) {
+        swVar = setInterval(addSec, 1000);
+        timeStarted = false;
+        console.log(swVar);
+    };
+};
+const swStop = () => {
+    clearInterval(swVar);
+};
+for (i = 0; i < coverArray.length; i++) {
+    coverArray[i].addEventListener(`click`, swStart);
+    coverArray[i].addEventListener(`contextmenu`, swStart);
+};
 // Unsuccesful attempt at using flags to make covers unclickable; will return to sort out later
 // const winLoseCondition = () => {
 //     let safeCovers = document.querySelectorAll(`.safe`);
@@ -420,7 +431,7 @@ const gameStart = () => {
     lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
     lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
     // win/lose conditions
-    makeWinArray()
+    makeWinArray();
     winDisplay();
     loseDisplay();
     // Adjust number colors

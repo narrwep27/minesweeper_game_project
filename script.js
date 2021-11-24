@@ -1,17 +1,17 @@
 // Global constants that remain with changing grid sizes
 const squareArray = document.querySelectorAll(`.square`);
-const mineNumArray = [];
+let mineNumArray = [];
 mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 const coverArray = document.querySelectorAll(`.cover`);
 const redFlagArray = document.querySelectorAll(`.redFlag`);
-let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
+let minePercent = null;
 // Game end variables
 let winArray = [];
 const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
 // Timer global variables
 let timePassed = 0;
-let timeStarted = true;
+let timeStarted = false;
 let swFunctionVar = null;
 
 // Global constants that need updates with changing grid sizes
@@ -283,6 +283,7 @@ const hideCoverShowFlag = () => {
     };
 };
 // Variables and functions to prep win/lose condition
+let boomCovers = null;
 const makeWinArray = () => {
     for (i = 0; i < coverArray.length; i++) {
         if (coverArray[i].classList[1] === `safe`) {
@@ -301,17 +302,21 @@ const arraysEqual = (array1, array2) => {
     return true;
 };
 const loseDisplay = () => {
-    let boomCovers = document.querySelectorAll(`.boom`);
+    document.querySelector(`#gameEndDisplay`).style.display = `block`;
+    document.querySelector(`#gameEndText`).innerHTML  = `You stepped on a mine...`;
+    document.querySelector(`#winLossEmoji`).innerHTML = `&#128565`;
+    swStop();
     for (i = 0; i < boomCovers.length; i++) {
-        boomCovers[i].addEventListener(`click`, () => {
-            document.querySelector(`#gameEndDisplay`).style.display = `block`;
-            document.querySelector(`#gameEndText`).innerHTML  = `You stepped on a mine...`;
-            document.querySelector(`#lossEmoji`).style.display = `block`;
-            swStop();
-        });
+        boomCovers[i].removeEventListener(`click`, loseDisplay);
     };
 };
-const winDisplay = () => {
+const loseCondition = () => {
+    boomCovers = document.querySelectorAll(`.boom`);
+    for (i = 0; i < boomCovers.length; i++) {
+        boomCovers[i].addEventListener(`click`, loseDisplay);
+    };
+};
+const winCondition = () => {
     let coversClickedArray = [];
     coversClickedArray.length = coverArray.length;
     coversClickedArray.fill(0);
@@ -323,8 +328,11 @@ const winDisplay = () => {
                 document.querySelector(`#gameEndDisplay`).style.display = `block`;
                 document.querySelector(`#gameEndText`).innerHTML = `You cleared all the mines!`;
                 document.querySelector(`#highDiff`).style.visibility = `visible`;
-                document.querySelector(`#winEmoji`).style.display = `block`;
+                document.querySelector(`#winLossEmoji`).innerHTML = `&#128512`;
                 swStop();
+                for (i = 0; i < boomCovers.length; i++) {
+                    boomCovers[i].removeEventListener(`click`, loseDisplay);
+                };
             };
         });
     };
@@ -356,14 +364,14 @@ const addSec = () => {
     document.querySelector(`.stopwatch p`).innerHTML = timePassed + ` sec`;
 };
 const swStart = () => {
-    if (timeStarted === true) {
+    if (timeStarted === false) {
         swVar = setInterval(addSec, 1000);
-        timeStarted = false;
-        console.log(swVar);
+        timeStarted = true;
     };
 };
 const swStop = () => {
     clearInterval(swVar);
+    timeStarted = false;
 };
 for (i = 0; i < coverArray.length; i++) {
     coverArray[i].addEventListener(`click`, swStart);
@@ -374,32 +382,32 @@ for (i = 0; i < coverArray.length; i++) {
 //     let safeCovers = document.querySelectorAll(`.safe`);
 //     let safeClickedNum = 0;
 //     let boomCovers = document.querySelectorAll(`.boom`);
-//     const loseDisplay = () => {
+//     const loseCondition = () => {
 //         document.querySelector(`#gameEndDisplay`).style.display = `block`;
 //         document.querySelector(`#gameEndText`).innerHTML = `You stepped on a mine...`;
 //         for (i = 0; i < coverArray.length; i++) {
-//             coverArray[i].removeEventListener(`click`, loseDisplay);
-//             coverArray[i].removeEventListener(`click`, winDisplay);
+//             coverArray[i].removeEventListener(`click`, loseCondition);
+//             coverArray[i].removeEventListener(`click`, winCondition);
 //         };
 //     };
-//     const winDisplay = () => {
+//     const winCondition = () => {
 //         safeClickedNum += 1;
 //         if (safeClickedNum === safeCovers.length) {
 //             document.querySelector(`#gameEndDisplay`).style.display = `block`;
 //             document.querySelector(`#gameEndText`).innerHTML = `You found all the mines!`;
 //             for (i = 0; i < coverArray.length; i++) {
-//                 coverArray[i].removeEventListener(`click`, loseDisplay);
-//                 coverArray[i].removeEventListener(`click`, winDisplay);
+//                 coverArray[i].removeEventListener(`click`, loseCondition);
+//                 coverArray[i].removeEventListener(`click`, winCondition);
 //             };
 //         };
 //     };
 //     for (i = 0; i < document.querySelectorAll(`.boom`).length; i++) {
 //         let currentBoomCover = boomCovers[i];
-//         currentBoomCover.addEventListener(`click`, loseDisplay);
+//         currentBoomCover.addEventListener(`click`, loseCondition);
 //     };
 //     for (i = 0; i < safeCovers.length; i++) {
 //         let currentSafeCover = safeCovers[i];
-//         currentSafeCover.addEventListener(`click`, winDisplay);
+//         currentSafeCover.addEventListener(`click`, winCondition);
 //     };
 // };
 
@@ -411,6 +419,11 @@ const gameStart = () => {
     row1CenterCount(`col2`, mineNumArray[1]);
     row1CenterCount(`col3`, mineNumArray[2]);
     row1CenterCount(`col4`, mineNumArray[3]);
+    // last row mine check
+    lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
+    lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
+    lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
+    lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
     // edge of middle rows mine check
     midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[5], mineNumArray[9]);
     midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[10], mineNumArray[14]);
@@ -425,32 +438,30 @@ const gameStart = () => {
     midCenterCount(row4Array, `col2`, row3Array, row5Array, mineNumArray[16]);
     midCenterCount(row4Array, `col3`, row3Array, row5Array, mineNumArray[17]);
     midCenterCount(row4Array, `col4`, row3Array, row5Array, mineNumArray[18]);
-    // last row mine check
-    lastRowCornerCount(row5Array, row4Array, mineNumArray[20], mineNumArray[24]);
-    lastRowCenterCount(row5Array, `col2`, row4Array, mineNumArray[21]);
-    lastRowCenterCount(row5Array, `col3`, row4Array, mineNumArray[22]);
-    lastRowCenterCount(row5Array, `col4`, row4Array, mineNumArray[23]);
     // win/lose conditions
     makeWinArray();
-    winDisplay();
-    loseDisplay();
+    winCondition();
+    loseCondition();
     // Adjust number colors
     numColors();
 };
+
 // Function for game reset/Need to fix bugs
-// const gameReset = () => {
-//     for (i = 0; i < squareArray.length; i++) {
-//         squareArray[i].classList.replace(`mineHere`, `empty`);
-//         squareArray[i].innerHTML = ``;
-//         minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
-//         coverArray[i].style.visibility = `visible`;
-//         coverArray[i].classList.replace(`flagged`, `unflagged`);
-//         coverArray[i].classList.replace(`boom`, `safe`);
-//         redFlagArray[i].classList.replace(`show`,`hide`);
-//     };
-//     document.querySelector(`#gameEndDisplay`).style.display = `none`;
-//     gameStart();
-// };
+const gameReset = () => {
+    for (i = 0; i < squareArray.length; i++) {
+        squareArray[i].classList.replace(`mineHere`, `empty`);
+        squareArray[i].innerHTML = ``;
+        coverArray[i].style.visibility = `visible`;
+        coverArray[i].classList.replace(`flagged`, `unflagged`);
+        coverArray[i].classList.replace(`boom`, `safe`);
+        redFlagArray[i].classList.replace(`show`,`hide`);
+    };
+    minePercent = null;
+    document.querySelector(`#gameEndDisplay`).style.display = `none`;
+    document.querySelector(`#highDiff`).style.visibility = `hidden`;
+    document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;
+    gameStart();
+};
 
 // Invoked functions and event listeners
 gameStart();
@@ -458,6 +469,7 @@ hideCoverShowFlag();
 document.querySelector(`#gridOverlay`).addEventListener(`contextmenu`, (event) => {
     event.preventDefault();
 });
-document.querySelector(`button`).addEventListener(`click`, () => {
-    location.reload();
-});
+document.querySelector(`button`).addEventListener(`click`, gameReset);
+// document.querySelector(`button`).addEventListener(`click`, () => {
+//     location.reload();
+// });

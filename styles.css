@@ -68,10 +68,11 @@ h3 {
 }
 #gameEndBox {
     background-color: white;
+    opacity: .9;
     position: absolute;
     border: 1px solid black;
     width: 350px;
-    height: 250px;
+    height: 260px;
     margin-left: -190px;
     top: 140px;
     left: 50%;
@@ -79,13 +80,8 @@ h3 {
 #gameEndText {
     margin: 5px 0 0 0;
 }
-#winEmoji {
-    display: none;
-    font-size: 80px;
-    margin: 0 auto;
-}
-#lossEmoji {
-    display: none;
+#winLossEmoji {
+    display: block;
     font-size: 90px;
     margin: 10px auto;
 }
@@ -94,10 +90,7 @@ h3 {
     visibility: hidden;
 }
 #highDiff a {
-    font-size: 1.5em;
-    background-color: rgb(192,192,192,.5);
-    border: 1px solid black;
-    padding: 2px 10px;
+    display: inline;
 }
 
 main {

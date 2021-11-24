@@ -360,6 +360,15 @@ const gameStart = () => {
     row1CenterCount(`col6`, mineNumArray[5]);
     row1CenterCount(`col7`, mineNumArray[6]);
     row1CenterCount(`col8`, mineNumArray[7]);
+    // last row mine check
+    lastRowCornerCount(row9Array, row8Array, mineNumArray[72], mineNumArray[80]);
+    lastRowCenterCount(row9Array, `col2`, row8Array, mineNumArray[73]);
+    lastRowCenterCount(row9Array, `col3`, row8Array, mineNumArray[74]);
+    lastRowCenterCount(row9Array, `col4`, row8Array, mineNumArray[75]);
+    lastRowCenterCount(row9Array, `col5`, row8Array, mineNumArray[76]);
+    lastRowCenterCount(row9Array, `col6`, row8Array, mineNumArray[77]);
+    lastRowCenterCount(row9Array, `col7`, row8Array, mineNumArray[78]);
+    lastRowCenterCount(row9Array, `col8`, row8Array, mineNumArray[79]);
     // edge of middle rows mine check
     midEdgeCount(row2Array, row1Array, row3Array, mineNumArray[9], mineNumArray[17]);
     midEdgeCount(row3Array, row2Array, row4Array, mineNumArray[18], mineNumArray[26]);
@@ -418,15 +427,6 @@ const gameStart = () => {
     midCenterCount(row8Array, `col6`, row7Array, row9Array, mineNumArray[68]);
     midCenterCount(row8Array, `col7`, row7Array, row9Array, mineNumArray[69]);
     midCenterCount(row8Array, `col8`, row7Array, row9Array, mineNumArray[70]);
-    // last row mine check
-    lastRowCornerCount(row9Array, row8Array, mineNumArray[72], mineNumArray[80]);
-    lastRowCenterCount(row9Array, `col2`, row8Array, mineNumArray[73]);
-    lastRowCenterCount(row9Array, `col3`, row8Array, mineNumArray[74]);
-    lastRowCenterCount(row9Array, `col4`, row8Array, mineNumArray[75]);
-    lastRowCenterCount(row9Array, `col5`, row8Array, mineNumArray[76]);
-    lastRowCenterCount(row9Array, `col6`, row8Array, mineNumArray[77]);
-    lastRowCenterCount(row9Array, `col7`, row8Array, mineNumArray[78]);
-    lastRowCenterCount(row9Array, `col8`, row8Array, mineNumArray[79]);
     // win/lose conditions
     makeWinArray()
     winDisplay();

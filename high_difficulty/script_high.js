@@ -286,6 +286,7 @@ const hideCoverShowFlag = () => {
     };
 };
 // Variables and functions to prep win/lose condition
+let boomCovers = null;
 const makeWinArray = () => {
     for (i = 0; i < coverArray.length; i++) {
         if (coverArray[i].classList[1] === `safe`) {
@@ -304,15 +305,20 @@ const arraysEqual = (array1, array2) => {
     return true;
 };
 const loseDisplay = () => {
-    let boomCovers = document.querySelectorAll(`.boom`);
+    document.querySelector(`#gameEndDisplay`).style.display = `block`;
+    document.querySelector(`#gameEndText`).innerHTML  = `You stepped on a mine...`;
+    document.querySelector(`#winLossEmoji`).innerHTML = `&#128565`;
     for (i = 0; i < boomCovers.length; i++) {
-        boomCovers[i].addEventListener(`click`, () => {
-            document.querySelector(`#gameEndDisplay`).style.display = `block`;
-            document.querySelector(`#gameEndText`).innerHTML  = `You stepped on a mine...`;
-        });
+        boomCovers[i].removeEventListener(`click`, loseDisplay);
     };
 };
-const winDisplay = () => {
+const loseCondition = () => {
+    let boomCovers = document.querySelectorAll(`.boom`);
+    for (i = 0; i < boomCovers.length; i++) {
+        boomCovers[i].addEventListener(`click`, loseDisplay);
+    };
+};
+const winCondition = () => {
     let coversClickedArray = [];
     coversClickedArray.length = coverArray.length;
     coversClickedArray.fill(0);
@@ -323,6 +329,10 @@ const winDisplay = () => {
             if (arraysEqual(coversClickedArray, winArray)) {
                 document.querySelector(`#gameEndDisplay`).style.display = `block`;
                 document.querySelector(`#gameEndText`).innerHTML = `You cleared all the mines!`;
+                document.querySelector(`#winLossEmoji`).innerHTML = `&#128512`;
+                for (i = 0; i < boomCovers.length; i++) {
+                    boomCovers[i].removeEventListener(`click`, loseDisplay);
+                };
             };
         });
     };
@@ -429,8 +439,8 @@ const gameStart = () => {
     midCenterCount(row8Array, `col8`, row7Array, row9Array, mineNumArray[70]);
     // win/lose conditions
     makeWinArray()
-    winDisplay();
-    loseDisplay();
+    winCondition();
+    loseCondition();
     // adjust number colors
     numColors();
 };

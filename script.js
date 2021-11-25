@@ -8,9 +8,11 @@ const redFlagArray = document.querySelectorAll(`.redFlag`);
 let minePercent = null;
 // Game end variables
 let winArray = [];
+let boomCovers = null;
 const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
 // Timer global variables
 let timePassed = 0;
+let previousTime = Infinity;
 let timeStarted = false;
 let swFunctionVar = null;
 
@@ -283,7 +285,6 @@ const hideCoverShowFlag = () => {
     };
 };
 // Variables and functions to prep win/lose condition
-let boomCovers = null;
 const makeWinArray = () => {
     for (i = 0; i < coverArray.length; i++) {
         if (coverArray[i].classList[1] === `safe`) {
@@ -330,6 +331,7 @@ const winCondition = () => {
                 document.querySelector(`#highDiff`).style.visibility = `visible`;
                 document.querySelector(`#winLossEmoji`).innerHTML = `&#128512`;
                 swStop();
+                showBest();
                 for (i = 0; i < boomCovers.length; i++) {
                     boomCovers[i].removeEventListener(`click`, loseDisplay);
                 };
@@ -365,17 +367,24 @@ const addSec = () => {
 };
 const swStart = () => {
     if (timeStarted === false) {
-        swVar = setInterval(addSec, 1000);
+        swFunctionVar = setInterval(addSec, 1000);
         timeStarted = true;
     };
 };
 const swStop = () => {
-    clearInterval(swVar);
+    clearInterval(swFunctionVar);
     timeStarted = false;
 };
 for (i = 0; i < coverArray.length; i++) {
     coverArray[i].addEventListener(`click`, swStart);
     coverArray[i].addEventListener(`contextmenu`, swStart);
+};
+// Functions to record best time
+const showBest = () => {
+    if (timePassed < previousTime) {
+        document.querySelector(`.bestTime p`).innerHTML = timePassed + ` sec`;
+    };
+    previousTime = timePassed;
 };
 // Unsuccesful attempt at using flags to make covers unclickable; will return to sort out later
 // const winLoseCondition = () => {
@@ -457,6 +466,8 @@ const gameReset = () => {
         redFlagArray[i].classList.replace(`show`,`hide`);
     };
     minePercent = null;
+    timePassed = 0;
+    mineNumArray.fill(0);
     document.querySelector(`#gameEndDisplay`).style.display = `none`;
     document.querySelector(`#highDiff`).style.visibility = `hidden`;
     document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;

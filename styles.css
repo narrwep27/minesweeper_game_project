@@ -95,7 +95,7 @@ h3 {
 
 main {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 50% 1fr 2fr;
     grid-template-rows: 1fr 1fr;
 }
 #gameboard {
@@ -111,22 +111,32 @@ main {
     align-self: center;
     justify-self: end;
 }
-.stopwatch, .diff {
+.stopwatch, .bestTime {
     border: 2px solid black;
     padding: 10px;
     margin: 0 1em;
-    width: 230px;
-    justify-self: start;
+    width: 130px;
+    height: 80px;
 }
 .stopwatch {
+    justify-self: center;
     align-self: end;
-
+}
+.bestTime {
+    grid-column: 3;
+    justify-self: start;
+    align-self: end;
 }
 .diff {
+    border: 2px solid black;
+    padding: 10px;
+    margin: 0 1em;
+    justify-self: start;
     align-self: center;
     padding-bottom: 20px;
+    grid-column: 2 / 4;
 }
-.stopwatch p {
+.stopwatch p, .bestTime p {
     font-size: 1.5em;
     margin: 8px auto;
 }

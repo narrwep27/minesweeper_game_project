@@ -23,6 +23,7 @@ Minesweepers is a simple but challenging game. Players click on a square to reve
 - Apply all edits in easy difficulty to intermediate
 - Refactor mine detection functions to make code DRY
 - Add additional difficulty level
+***
 
 ### ***Credits***
 - Minesweeper Information: [Minesweeper Online](https://minesweeper.online/)

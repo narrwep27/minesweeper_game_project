@@ -481,6 +481,3 @@ document.querySelector(`#gridOverlay`).addEventListener(`contextmenu`, (event) =
     event.preventDefault();
 });
 document.querySelector(`button`).addEventListener(`click`, gameReset);
-// document.querySelector(`button`).addEventListener(`click`, () => {
-//     location.reload();
-// });

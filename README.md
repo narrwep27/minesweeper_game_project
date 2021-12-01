@@ -18,6 +18,12 @@ Minesweepers is a simple but challenging game. Players click on a square to reve
 - You can also play it on surge: [Surge Project Site](npark-minesweeper5.surge.sh)
 ***
 
+### ***Future Project Goals***
+- Code functionality for flagged squares to ignore all click event listeners
+- Apply all edits in easy difficulty to intermediate
+- Refactor mine detection functions to make code DRY
+- Add additional difficulty level
+
 ### ***Credits***
 - Minesweeper Information: [Minesweeper Online](https://minesweeper.online/)
 - GA Provided Markdown Cheatsheet: [Markdown Cheatsheet PDF](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)

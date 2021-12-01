@@ -49,8 +49,7 @@ h3 {
     height: 20em;
     width: 20em;
     top: 324px;
-    left: 50%;
-    margin-left: -336px;
+    right: 50%;
 }
 .cover {
     display: block;
@@ -102,7 +101,7 @@ main {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    margin: 0 1em;
+    margin: 0;
     padding: 10px 0;
     height: 20em;
     max-height: 20em;
@@ -119,12 +118,10 @@ main {
     height: 80px;
 }
 .stopwatch {
-    justify-self: center;
     align-self: end;
 }
 .bestTime {
     grid-column: 3;
-    justify-self: start;
     align-self: end;
 }
 .diff {

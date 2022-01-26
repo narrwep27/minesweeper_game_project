@@ -1,13 +1,20 @@
 // Global constants that remain with changing grid sizes
 const squareArray = document.querySelectorAll(`.square`);
-const mineNumArray = [];
+let mineNumArray = [];
 mineNumArray.length = squareArray.length;
 mineNumArray.fill(0);
 const coverArray = document.querySelectorAll(`.cover`);
 const redFlagArray = document.querySelectorAll(`.redFlag`);
-const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
-let minePercent = parseFloat(document.querySelectorAll(`.mine`).length / squareArray.length);
+let minePercent = null;
+// Game end variables
 let winArray = [];
+let boomCovers = null;
+const gameEndDisplay = document.querySelector(`#gameEndDisplay`);
+// Timer global variables
+let timePassed = 0;
+let previousTime = Infinity;
+let timeStarted = false;
+let swFunctionVar = null;
 
 // Global constants that need updates with changing grid sizes
 const row1Array = document.querySelectorAll(`.row1`);
@@ -286,7 +293,6 @@ const hideCoverShowFlag = () => {
     };
 };
 // Variables and functions to prep win/lose condition
-let boomCovers = null;
 const makeWinArray = () => {
     for (i = 0; i < coverArray.length; i++) {
         if (coverArray[i].classList[1] === `safe`) {
@@ -313,7 +319,7 @@ const loseDisplay = () => {
     };
 };
 const loseCondition = () => {
-    let boomCovers = document.querySelectorAll(`.boom`);
+    boomCovers = document.querySelectorAll(`.boom`);
     for (i = 0; i < boomCovers.length; i++) {
         boomCovers[i].addEventListener(`click`, loseDisplay);
     };
@@ -444,6 +450,24 @@ const gameStart = () => {
     // adjust number colors
     numColors();
 };
+// Function for game reset/Need to fix bugs
+const gameReset = () => {
+    for (i = 0; i < squareArray.length; i++) {
+        squareArray[i].classList.replace(`mineHere`, `empty`);
+        squareArray[i].innerHTML = ``;
+        coverArray[i].style.visibility = `visible`;
+        coverArray[i].classList.replace(`flagged`, `unflagged`);
+        coverArray[i].classList.replace(`boom`, `safe`);
+        redFlagArray[i].classList.replace(`show`,`hide`);
+    };
+    minePercent = null;
+    timePassed = 0;
+    mineNumArray.fill(0);
+    document.querySelector(`#gameEndDisplay`).style.display = `none`;
+    document.querySelector(`#lowDiff`).style.visibility = `hidden`;
+    // document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;
+    gameStart();
+};
 
 // Invoked functions and event listeners
 gameStart();
@@ -451,6 +475,4 @@ hideCoverShowFlag();
 document.querySelector(`#gridOverlay`).addEventListener(`contextmenu`, (event) => {
     event.preventDefault();
 });
-document.querySelector(`button`).addEventListener(`click`, () => {
-    location.reload();
-});
+document.querySelector(`button`).addEventListener(`click`, gameReset);

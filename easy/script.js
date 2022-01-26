@@ -455,7 +455,7 @@ const gameStart = () => {
     numColors();
 };
 
-// Function for game reset/Need to fix bugs
+// Function for game reset
 const gameReset = () => {
     for (i = 0; i < squareArray.length; i++) {
         squareArray[i].classList.replace(`mineHere`, `empty`);

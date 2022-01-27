@@ -328,7 +328,7 @@ const winCondition = () => {
             if (arraysEqual(coversClickedArray, winArray)) {
                 document.querySelector(`#gameEndDisplay`).style.display = `block`;
                 document.querySelector(`#gameEndText`).innerHTML = `You cleared all the mines!`;
-                document.querySelector(`#highDiff`).style.visibility = `visible`;
+                document.querySelector(`#diffChoice`).style.visibility = `visible`;
                 document.querySelector(`#winLossEmoji`).innerHTML = `&#128512`;
                 swStop();
                 showBest();
@@ -469,7 +469,7 @@ const gameReset = () => {
     timePassed = 0;
     mineNumArray.fill(0);
     document.querySelector(`#gameEndDisplay`).style.display = `none`;
-    document.querySelector(`#highDiff`).style.visibility = `hidden`;
+    document.querySelector(`#diffChoice`).style.visibility = `hidden`;
     document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;
     gameStart();
 };

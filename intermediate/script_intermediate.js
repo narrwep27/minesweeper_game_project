@@ -464,7 +464,6 @@ const gameReset = () => {
     timePassed = 0;
     mineNumArray.fill(0);
     document.querySelector(`#gameEndDisplay`).style.display = `none`;
-    document.querySelector(`#lowDiff`).style.visibility = `hidden`;
     // document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;
     gameStart();
 };

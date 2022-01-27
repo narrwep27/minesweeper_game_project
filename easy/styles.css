@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300&display=swap');
-
+/* general styling */
 * {
     text-align: center;
     font-family: 'Oxygen', sans-serif;
@@ -19,27 +19,13 @@ li {
 header {
     margin: 0 0 1em 0;
 }
-
-.square, .cover {
-    border: 1px solid black;
-    padding: .4em 0;
-}
-.mine {
-    max-width: 2em;
-    margin-top: .4em;
-}
-.hide {
-    display: none;
-}
-.show {
-    max-width: 2.5em;
-    top: 20%;
-}
 h3 {
     margin: 0;
     margin-top: .6em;
     font-weight: 900;
 }
+
+/* cover grid */
 #gridOverlay {
     position: absolute;
     display: grid;
@@ -57,41 +43,8 @@ h3 {
     border: 5px outset rgb(150,150,150);
     padding: 3px 0;
 }
-#gameEndDisplay {
-    display: none;
-    position: absolute;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(0,0,0,.3);
-}
-#gameEndBox {
-    background-color: white;
-    opacity: .9;
-    position: absolute;
-    border: 1px solid black;
-    width: 350px;
-    height: 260px;
-    margin-left: -190px;
-    top: 140px;
-    left: 50%;
-}
-#gameEndText {
-    margin: 5px 0 0 0;
-}
-#winLossEmoji {
-    display: block;
-    font-size: 90px;
-    margin: 10px auto;
-}
-#highDiff {
-    margin: 5px 0 ;
-    visibility: hidden;
-}
-#highDiff a {
-    display: inline;
-}
 
+/* main game grid */
 main {
     display: grid;
     grid-template-columns: 50% 1fr 2fr;
@@ -110,6 +63,23 @@ main {
     align-self: center;
     justify-self: end;
 }
+.square {
+    border: 1px solid black;
+    padding: .4em 0;
+}
+.mine {
+    max-width: 2em;
+    margin-top: .4em;
+}
+.hide {
+    display: none;
+}
+.show {
+    max-width: 2.5em;
+    top: 20%;
+}
+
+/* dashboard */
 .stopwatch, .bestTime {
     border: 2px solid black;
     padding: 10px;
@@ -119,6 +89,7 @@ main {
 }
 .stopwatch {
     align-self: end;
+    margin: 0 auto;
 }
 .bestTime {
     grid-column: 3;
@@ -127,7 +98,7 @@ main {
 .diff {
     border: 2px solid black;
     padding: 10px;
-    margin: 0 1em;
+    margin: 0 3em;
     justify-self: start;
     align-self: center;
     padding-bottom: 20px;
@@ -136,4 +107,40 @@ main {
 .stopwatch p, .bestTime p {
     font-size: 1.5em;
     margin: 8px auto;
+}
+
+/* game end display */
+#gameEndDisplay {
+    display: none;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(0,0,0,.3);
+}
+#gameEndBox {
+    background-color: white;
+    opacity: .95;
+    position: absolute;
+    border: 1px solid black;
+    width: 350px;
+    height: 300px;
+    margin-left: -190px;
+    top: 140px;
+    left: 50%;
+}
+#gameEndText {
+    margin: 5px 0 0 0;
+}
+#winLossEmoji {
+    display: block;
+    font-size: 90px;
+    margin: 10px auto;
+}
+#diffChoice {
+    margin: 5px 0 ;
+    visibility: hidden;
+}
+#diffChoice a {
+    display: inline;
 }

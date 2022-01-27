@@ -314,6 +314,7 @@ const loseDisplay = () => {
     document.querySelector(`#gameEndDisplay`).style.display = `block`;
     document.querySelector(`#gameEndText`).innerHTML  = `You stepped on a mine...`;
     document.querySelector(`#winLossEmoji`).innerHTML = `&#128565`;
+    swStop();
     for (i = 0; i < boomCovers.length; i++) {
         boomCovers[i].removeEventListener(`click`, loseDisplay);
     };
@@ -336,6 +337,8 @@ const winCondition = () => {
                 document.querySelector(`#gameEndDisplay`).style.display = `block`;
                 document.querySelector(`#gameEndText`).innerHTML = `You cleared all the mines!`;
                 document.querySelector(`#winLossEmoji`).innerHTML = `&#128512`;
+                swStop();
+                showBest();
                 for (i = 0; i < boomCovers.length; i++) {
                     boomCovers[i].removeEventListener(`click`, loseDisplay);
                 };
@@ -363,6 +366,32 @@ const numColors = () => {
             numTexts[i].style.color = `gray`;
         };
     };
+};
+// Functions for stopwatch
+const addSec = () => {
+    timePassed += 1;
+    document.querySelector(`.stopwatch p`).innerHTML = timePassed + ` sec`;
+};
+const swStart = () => {
+    if (timeStarted === false) {
+        swFunctionVar = setInterval(addSec, 1000);
+        timeStarted = true;
+    };
+};
+const swStop = () => {
+    clearInterval(swFunctionVar);
+    timeStarted = false;
+};
+for (i = 0; i < coverArray.length; i++) {
+    coverArray[i].addEventListener(`click`, swStart);
+    coverArray[i].addEventListener(`contextmenu`, swStart);
+};
+// Functions to record best time
+const showBest = () => {
+    if (timePassed < previousTime) {
+        document.querySelector(`.bestTime p`).innerHTML = timePassed + ` sec`;
+    };
+    previousTime = timePassed;
 };
 // Function to start game
 const gameStart = () => {
@@ -464,7 +493,7 @@ const gameReset = () => {
     timePassed = 0;
     mineNumArray.fill(0);
     document.querySelector(`#gameEndDisplay`).style.display = `none`;
-    // document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;
+    document.querySelector(`.stopwatch p`).innerHTML = `0 sec`;
     gameStart();
 };
 

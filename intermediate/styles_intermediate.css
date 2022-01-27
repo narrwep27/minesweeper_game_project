@@ -124,20 +124,23 @@ main {
     position: absolute;
     border: 1px solid black;
     width: 350px;
-    height: 250px;
+    height: 320px;
     margin-left: -190px;
     top: 140px;
     left: 50%;
 }
 #gameEndText {
-    margin: 1em auto;
+    margin: 5px 0 0 0;
+}
+#winLossEmoji {
+    display: block;
+    font-size: 90px;
+    margin: 10px auto;
 }
 #diffChoice {
     margin: 30px 0;
 }
 #diffChoice a {
+    display: inline;
     font-size: 1.5em;
-    background-color: rgb(192,192,192,.5);
-    border: 1px solid black;
-    padding: 2px 10px;
 }

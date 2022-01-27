@@ -42,7 +42,7 @@ const coverRow9Array = document.querySelectorAll(`.covRow9`);
 const RNG = () => {
     return Math.floor(Math.random() * squareArray.length)
 };
-// Creates and places mines in random square to fill up no more than 12%(easy) and 16%(hard) of board
+// Creates and places mines in random square to fill up no more than 12%(easy) and 15%(hard) of board
 const createMine = () => {
     let randNum = RNG();
     const mine = document.createElement(`img`);

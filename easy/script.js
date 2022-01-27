@@ -38,7 +38,7 @@ const RNG = () => {
 const createMine = () => {
     let randNum = RNG();
     const mine = document.createElement(`img`);
-    mine.setAttribute(`src`, `../images/bomb.png`);
+    mine.setAttribute(`src`, `./images/bomb.png`);
     mine.setAttribute(`class`, `mine`);
     if (squareArray[randNum].classList[1] === `empty`) {
         squareArray[randNum].classList.replace(`empty`, `mineHere`);

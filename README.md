@@ -15,7 +15,7 @@ Minesweepers is a simple but challenging game. Players click on a square to reve
 - A link to the Trello that I used for this project can ve found [here](https://trello.com/b/ZMdrcXqs/ga-project-1-minesweeper).
 - To view and play the game, `fork` and `clone` this repo.
 - Open the `index.html` in your browser to try it out!
-- You can also play it on surge: [Surge Project Site](npark-minesweeper5.surge.sh)
+- You can also play it on surge: [Surge Project Site](npark-minesweeper.surge.sh)
 ***
 
 ### ***Future Project Goals***

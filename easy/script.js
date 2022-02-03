@@ -386,39 +386,6 @@ const showBest = () => {
     };
     previousTime = timePassed;
 };
-// Unsuccesful attempt at using flags to make covers unclickable; will return to sort out later
-// const winLoseCondition = () => {
-//     let safeCovers = document.querySelectorAll(`.safe`);
-//     let safeClickedNum = 0;
-//     let boomCovers = document.querySelectorAll(`.boom`);
-//     const loseCondition = () => {
-//         document.querySelector(`#gameEndDisplay`).style.display = `block`;
-//         document.querySelector(`#gameEndText`).innerHTML = `You stepped on a mine...`;
-//         for (i = 0; i < coverArray.length; i++) {
-//             coverArray[i].removeEventListener(`click`, loseCondition);
-//             coverArray[i].removeEventListener(`click`, winCondition);
-//         };
-//     };
-//     const winCondition = () => {
-//         safeClickedNum += 1;
-//         if (safeClickedNum === safeCovers.length) {
-//             document.querySelector(`#gameEndDisplay`).style.display = `block`;
-//             document.querySelector(`#gameEndText`).innerHTML = `You found all the mines!`;
-//             for (i = 0; i < coverArray.length; i++) {
-//                 coverArray[i].removeEventListener(`click`, loseCondition);
-//                 coverArray[i].removeEventListener(`click`, winCondition);
-//             };
-//         };
-//     };
-//     for (i = 0; i < document.querySelectorAll(`.boom`).length; i++) {
-//         let currentBoomCover = boomCovers[i];
-//         currentBoomCover.addEventListener(`click`, loseCondition);
-//     };
-//     for (i = 0; i < safeCovers.length; i++) {
-//         let currentSafeCover = safeCovers[i];
-//         currentSafeCover.addEventListener(`click`, winCondition);
-//     };
-// };
 
 // Function to start game
 const gameStart = () => {

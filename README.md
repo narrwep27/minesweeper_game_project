@@ -1,43 +1,46 @@
-# Minesweeper Project
+# Getting Started with Create React App
 
-#### Date: 11/17/2021
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-#### Author: Narrwe Park
+## Available Scripts
 
-#### Websites: [GitHub](https://github.com/narrwep27) | [LinkedIn](https://www.linkedin.com/in/narrwe-park-a29376192/)
+In the project directory, you can run:
 
-***
+### `npm start`
 
-![Minesweeper Game](https://lh6.googleusercontent.com/proxy/gVV3bG4tAC-4-6x3RPZFSrI3ys0qh-lCBCaea4hBKV0QiM5fXUtnj_-wlEgn90NQMi8=w1200-h630-p-k-no-nu)
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### ***Description***
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-Minesweepers is a simple but challenging game. Players click on a square to reveal that square. That square may hide a mine or not. If a square does not have a mine, it will show a number that identifies how many mines are directly adjacent to it. You lose if you click on a hidden mine. You win if you reveal all squares without a mine!
-***
+### `npm test`
 
-### ***Getting Started***
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-- A link to the Trello that I used for this project can ve found [here](https://trello.com/b/ZMdrcXqs/ga-project-1-minesweeper).
-- To view and play the game, `fork` and `clone` this repo.
-- Open the `index.html` in your browser to try it out!
-- You can also play it on surge: [npark-minesweeper.surge.sh](npark-minesweeper.surge.sh)
+### `npm run build`
 
-***
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### ***Future Project Goals***
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-- Code functionality for flagged squares to ignore all click event listeners
-- Apply all edits in easy difficulty to intermediate
-- Refactor mine detection functions to make code DRY
-- Add additional difficulty level
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-***
+### `npm run eject`
 
-### ***Credits***
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-- Minesweeper Information: [Minesweeper Online](https://minesweeper.online/)
-- GA Provided Markdown Cheatsheet: [Markdown Cheatsheet PDF](https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf)
-- Mine Image: [Pixabay Bomb Image](https://pixabay.com/vectors/bomb-cartoon-iconic-2025548/)
-- Flag Image: [CLEANPNG](https://www.cleanpng.com/png-red-flag-white-flag-clip-art-red-flag-1351736/)
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-***
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).

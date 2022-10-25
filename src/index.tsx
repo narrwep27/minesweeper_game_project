@@ -1,37 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {
-  createBrowserRouter,
-  RouterProvider
-} from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-import BeginnerPage from './pages/BeginnerPage';
 import './index.css';
-import IntermediatePage from './pages/IntermediatePage';
-import ExpertPage from './pages/ExpertPage';
+import App from './App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <BeginnerPage />
-  },
-  {
-    path: "/intermediate",
-    element: <IntermediatePage />
-  },
-  {
-    path: "/expert",
-    element: <ExpertPage />
-  }
-])
-
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <App />
   </React.StrictMode>
 );
 

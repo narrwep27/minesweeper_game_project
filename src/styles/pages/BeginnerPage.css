@@ -1,0 +1,11 @@
+.BeginnerPage {
+    text-align: center;
+}
+
+.BeginnerPage .GameGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width:fit-content;
+    margin: 2em auto;
+}

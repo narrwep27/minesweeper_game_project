@@ -1,9 +1,13 @@
-import "../styles/components/GridButton.css"
+import "../styles/components/GridButton.css";
 
-const GridButton = () => {
-    return (
-        <button />
-    )
+type Props = {
+    revealed: boolean;
 }
+
+const GridButton = (): JSX.Element => {
+    return (
+        <button className="GridButton"/>
+    );
+};
 
 export default GridButton;

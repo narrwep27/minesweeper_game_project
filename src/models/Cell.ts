@@ -2,8 +2,8 @@ type Cell = {
     value: string | number;
     revealed: boolean;
     flagged: boolean;
-    x: number;
-    y: number
+    row: number;
+    col: number
 };
 
 export default Cell;

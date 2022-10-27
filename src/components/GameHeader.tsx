@@ -3,27 +3,36 @@ import Mode from "../models/Mode";
 import "../styles/components/GameHeader.css";
 
 type Props = {
-    setMode: React.Dispatch<React.SetStateAction<Mode | null>>
+    mode: Mode;
+    setMode: React.Dispatch<React.SetStateAction<Mode>>;
 }
 
-const GameHeader = ({ setMode }: Props) => {
+const GameHeader = ({ mode, setMode }: Props) => {
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        if (e.target.value === "beginner") setMode(Mode.Beginner);
-        if (e.target.value === "intermediate") setMode(Mode.Intermediate);
-        if (e.target.value === "expert") setMode(Mode.Expert);
+        if (e.target.value === Mode.Beginner) setMode(Mode.Beginner);
+        if (e.target.value === Mode.Intermediate) setMode(Mode.Intermediate);
+        if (e.target.value === Mode.Expert) setMode(Mode.Expert);
     };
     
     return (
         <div className="GameHeader">
             <h1>Minesweeper</h1>
             <div className="GameHeader-controls">
-                <select value="beginner" onChange={handleChange}>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="expert">Expert</option>
-                </select>
-                <button>&#128512;</button>
-                <div>
+                <div className="GameHeader-controls-control">
+                    <select 
+                        className="GameHeader-controls-control-select"
+                        value={mode} 
+                        onChange={handleChange}
+                        >
+                        <option value={Mode.Beginner}>Beginner</option>
+                        <option value={Mode.Intermediate}>Intermediate</option>
+                        <option value={Mode.Expert}>Expert</option>
+                    </select>
+                </div>
+                <div className="GameHeader-controls-control">
+                    <button className="GameHeader-controls-control-button">&#128512;</button>
+                </div>
+                <div className="GameHeader-controls-control">
                     timer
                 </div>
             </div>

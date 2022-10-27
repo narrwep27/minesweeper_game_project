@@ -11,14 +11,14 @@ const CreateGameBoard = (mode: Mode): Cell[] | null => {
     if (mode === Mode.Expert) [rowCount, colCount] = [16, 30];
 
     const gameBoard: Cell[] = [];
-    for (let x = 0; x < colCount; x++) {
-        for (let y = 0; y < rowCount; y++) {
+    for (let x = 0; x < rowCount; x++) {
+        for (let y = 0; y < colCount; y++) {
             gameBoard.push({
                 value: 0,
                 revealed: false,
                 flagged: false,
-                x: x,
-                y: y
+                row: x,
+                col: y
             })
         }
     }

@@ -1,7 +1,15 @@
-.GameHeader {
-}
-
 .GameHeader-controls {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    gap: 5em;
+}
+
+.GameHeader-controls-control {
+    width: 4em;
+}
+
+.GameHeader-controls-control-button {
+    font-size: 1.8em;
+    height: 1.8em;
 }

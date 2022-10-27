@@ -1,7 +1,7 @@
 enum Mode {
-    Beginner = 81,
-    Intermediate = 256,
-    Expert = 480
+    Beginner = "Beginner",
+    Intermediate = "Intermediate",
+    Expert = "Expert"
 };
 
 export default Mode;

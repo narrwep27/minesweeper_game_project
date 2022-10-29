@@ -1,9 +1,7 @@
 import Mode from "../models/Mode";
 import Cell from "../models/Cell";
 
-const CreateGameBoard = (mode: Mode): Cell[] | null => {
-    if (!mode) return null;
-
+export const createGameBoard = (mode: Mode): Cell[] => {
     let rowCount: number = 0;
     let colCount: number = 0;
     if (mode === Mode.Beginner) [rowCount, colCount] = [9, 9];
@@ -11,14 +9,14 @@ const CreateGameBoard = (mode: Mode): Cell[] | null => {
     if (mode === Mode.Expert) [rowCount, colCount] = [16, 30];
 
     const gameBoard: Cell[] = [];
-    for (let x = 0; x < rowCount; x++) {
-        for (let y = 0; y < colCount; y++) {
+    for (let row = 1; row <= rowCount; row++) {
+        for (let col = 1; col <= colCount; col++) {
             gameBoard.push({
                 value: 0,
                 revealed: false,
                 flagged: false,
-                row: x,
-                col: y
+                row: row,
+                col: col
             })
         }
     }
@@ -26,6 +24,4 @@ const CreateGameBoard = (mode: Mode): Cell[] | null => {
     return gameBoard;
 };
 
-export {
-    CreateGameBoard
-};
+export const initializeMines = () => {};

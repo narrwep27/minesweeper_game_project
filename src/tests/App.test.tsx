@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import App from '../App';
 import GameBoard from '../components/GameBoard';
 
-test('renders GameBoard component in App.tsx', () => {
-  render(<App />);
+describe('App.tsx test cases', () => {
+  test('renders GameBoard component in App.tsx', () => {
+    render(<App />);
+  });
 });

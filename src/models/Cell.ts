@@ -1,5 +1,6 @@
 type Cell = {
-    value: string | number;
+    value: number;
+    mine: boolean;
     revealed: boolean;
     flagged: boolean;
     row: number;

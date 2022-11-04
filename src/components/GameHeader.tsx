@@ -15,7 +15,7 @@ const GameHeader = ({ mode, setMode }: Props) => {
     };
     
     return (
-        <div className="GameHeader">
+        <div className="GameHeader" data-testid="GameHeader">
             <h1>Minesweeper</h1>
             <div className="GameHeader-controls">
                 <div className="GameHeader-controls-control">

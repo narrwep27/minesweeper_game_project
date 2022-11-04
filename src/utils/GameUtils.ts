@@ -29,7 +29,7 @@ export const getRandIntMaxExclusive = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min) + min);
 }
 
-export const initializeMines = (startInd: number, gameBoard: Cell[]): Cell[] => {
+export const setMines = (startInd: number, gameBoard: Cell[]): Cell[] => {
     let mineCount = 0;
     if (gameBoard.length === 81) mineCount = 10;
     if (gameBoard.length === 256) mineCount = 40;
@@ -46,3 +46,7 @@ export const initializeMines = (startInd: number, gameBoard: Cell[]): Cell[] => 
 
     return gameBoard;
 };
+
+export const orderCellsByRow = (gameBoard: Cell[]): Cell[][] => {};
+
+export const initializeMineCounts = (gameBoard: Cell[]): Cell[] => {};

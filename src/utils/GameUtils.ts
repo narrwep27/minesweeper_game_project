@@ -13,6 +13,7 @@ export const createGameBoard = (mode: Mode): Cell[] => {
         for (let col = 1; col <= colCount; col++) {
             gameBoard.push({
                 value: 0,
+                mine: false,
                 revealed: false,
                 flagged: false,
                 row: row,
@@ -24,4 +25,24 @@ export const createGameBoard = (mode: Mode): Cell[] => {
     return gameBoard;
 };
 
-export const initializeMines = () => {};
+export const getRandIntMaxExclusive = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+export const initializeMines = (startInd: number, gameBoard: Cell[]): Cell[] => {
+    let mineCount = 0;
+    if (gameBoard.length === 81) mineCount = 10;
+    if (gameBoard.length === 256) mineCount = 40;
+    if (gameBoard.length === 480) mineCount = 99;
+
+    let rng = getRandIntMaxExclusive(0, gameBoard.length);
+
+    for (let i = 0; i < mineCount; i++) {
+        while (rng === startInd || gameBoard[rng].mine) {
+            rng = getRandIntMaxExclusive(0, gameBoard.length);
+        };
+        gameBoard[rng].mine = true;
+    };
+
+    return gameBoard;
+};

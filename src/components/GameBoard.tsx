@@ -16,7 +16,7 @@ const GameBoard = () => {
     }, [mode]);
     
     return (
-        <div className="GameBoard">
+        <div className="GameBoard" data-testid="GameBoard">
             <GameHeader mode={mode} setMode={setMode} />
             <div className={`GameBoard-grid ${mode}`}>
                 {board?.map((cell) => (

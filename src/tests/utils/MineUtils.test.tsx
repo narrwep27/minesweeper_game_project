@@ -1,11 +1,11 @@
 import Cell from "../../models/Cell";
 import Mode from "../../models/Mode";
-import { 
-    createGameBoard, 
+import { createGameBoard, orderCellsByRow } from "../../utils/GameBoardUtils";
+import {
+    setMines,
     getRandIntMaxExclusive,
-    setMines, 
     initializeMineCounts
-} from "../../utils/GameUtils";
+} from "../../utils/MineUtils";
 
 const countMines = (gameBoard: Cell[]): number => {
     let mineCount = 0;
@@ -15,18 +15,7 @@ const countMines = (gameBoard: Cell[]): number => {
     return mineCount;
 };
 
-describe('GameUtils', () => {
-    test('createGameBoard returns expected cell length depending on mode', () => {
-        const begBoard = createGameBoard(Mode.Beginner);
-        expect(begBoard).toHaveLength(81);
-
-        const intBoard = createGameBoard(Mode.Intermediate);
-        expect(intBoard).toHaveLength(256);
-
-        const expBoard = createGameBoard(Mode.Expert);
-        expect(expBoard).toHaveLength(480);
-    });
-
+describe('MineUtils', () => {
     test('setMines returns proper number of mines with different modes', () => {
         let mineCount: number;
 
@@ -57,5 +46,9 @@ describe('GameUtils', () => {
         expect(expBoard[startInd].mine).toBeFalsy();
     });
 
-    test('initializeMineCounts sets cell value correctly', () => {});
+    test('initializeMineCounts counts adjacent mines', () => {
+        const begBoardByRow = orderCellsByRow(createGameBoard(Mode.Beginner));
+        const intBoardByRow = orderCellsByRow(createGameBoard(Mode.Intermediate));
+        const expBoardByRow = orderCellsByRow(createGameBoard(Mode.Expert));
+    });
 });

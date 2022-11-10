@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import GameHeader from "./GameHeader";
 import Cell from "../models/Cell";
 import Mode from "../models/Mode";
-import { createGameBoard } from "../utils/GameUtils";
+import { createGameBoard } from "../utils/GameBoardUtils";
 import "../styles/components/GameBoard.css";
 
 const GameBoard = () => {

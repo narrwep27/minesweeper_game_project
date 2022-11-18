@@ -39,3 +39,9 @@ export const orderCellsByRow = (gameBoard: Cell[]): Cell[][] => {
 
     return cellsByRow;
 };
+
+export const toggleFlag = (cell: Cell): void => {
+    cell.flagged = cell.flagged ? false : true;
+};
+
+export const revealCellAndAdj = (row: number, col: number, boardByRow: Cell[][]): void => {};

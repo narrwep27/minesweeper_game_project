@@ -3,17 +3,9 @@ import Mode from "../../models/Mode";
 import { createGameBoard, orderCellsByRow } from "../../utils/GameBoardUtils";
 import {
     setMines,
-    getRandIntMaxExclusive,
+    getRandIndForMode,
     initializeMineCounts
 } from "../../utils/MineUtils";
-
-const countMines = (gameBoard: Cell[]): number => {
-    let mineCount = 0;
-    for (let i = 0; i < gameBoard.length; i++) {
-        if (gameBoard[i].mine) mineCount++;
-    };
-    return mineCount;
-};
 
 describe('MineUtils', () => {
     test('setMines returns proper number of mines with different modes', () => {
@@ -36,26 +28,26 @@ describe('MineUtils', () => {
     });
 
     test('setMines never sets mine at starting index', () => {
-        let startInd = getRandIntMaxExclusive(0, 81);
+        let startInd = getRandIndForMode(Mode.Beginner);
         const begBoard = createGameBoard(Mode.Beginner);
         setMines(startInd, begBoard);
         expect(begBoard[startInd].mine).not.toBe(true);
 
-        startInd = getRandIntMaxExclusive(0, 256);
+        startInd = getRandIndForMode(Mode.Intermediate);
         const intBoard = createGameBoard(Mode.Intermediate);
         setMines(startInd, intBoard);
         expect(intBoard[startInd].mine).not.toBe(true);
 
-        startInd = getRandIntMaxExclusive(0, 480);
+        startInd = getRandIndForMode(Mode.Expert);
         const expBoard = createGameBoard(Mode.Expert);
         setMines(startInd, expBoard);
         expect(expBoard[startInd].mine).not.toBe(true);
     });
 
     test('initializeMineCounts causes adjacent squares to detect mines', () => {
-        const begBoard = createGameBoard(Mode.Beginner);
+        const begBoard: Cell[] = createGameBoard(Mode.Beginner);
         setMines(0, begBoard);
-        const begBoardByRow = orderCellsByRow(begBoard)
+        const begBoardByRow: Cell[][] = orderCellsByRow(begBoard)
         initializeMineCounts(begBoardByRow);
         testDetectMines(begBoardByRow);
 
@@ -73,28 +65,85 @@ describe('MineUtils', () => {
     });
 });
 
+const countMines = (gameBoard: Cell[]): number => {
+    let mineCount = 0;
+    for (let i = 0; i < gameBoard.length; i++) {
+        if (gameBoard[i].mine) mineCount++;
+    };
+    return mineCount;
+};
+
 const testDetectMines = (boardByRow: Cell[][]): void => {
-    const cellExists = (row: number, col: number): boolean => {
-        try {
-            const cell = boardByRow[row][col]
-            return true;
-        } catch {
-            return false;
+    for (let row = 0; row < boardByRow.length; row++) {
+        const lastRow = boardByRow.length - 1;
+        for (let col = 0; col < boardByRow[row].length; col++) {
+            const lastCol = boardByRow[row].length - 1;
+            if (!boardByRow[row][col].mine) continue;
+
+            if (row === 0) {
+                if (col === 0) {
+                    expect(boardByRow[0][1].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][0].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][1].value).toBeGreaterThan(0);
+                }
+                else if (col === lastCol) {
+                    expect(boardByRow[0][lastCol - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][lastCol - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][lastCol].value).toBeGreaterThan(0);
+                }
+                else {
+                    expect(boardByRow[0][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[0][col + 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][col].value).toBeGreaterThan(0);
+                    expect(boardByRow[1][col + 1].value).toBeGreaterThan(0);
+                };
+            }
+            else if (row === lastRow) {
+                if (col === 0) {
+                    expect(boardByRow[lastRow - 1][0].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow - 1][1].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow][1].value).toBeGreaterThan(0);
+                }
+                else if (col === lastCol) {
+                    expect(boardByRow[lastRow - 1][lastCol - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow - 1][lastCol].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow][lastCol - 1].value).toBeGreaterThan(0);
+                }
+                else {
+                    expect(boardByRow[lastRow - 1][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow - 1][col].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow - 1][col + 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[lastRow][col + 1].value).toBeGreaterThan(0);
+                };
+            }
+            else {
+                if (col === 0) {
+                    expect(boardByRow[row - 1][0].value).toBeGreaterThan(0);
+                    expect(boardByRow[row - 1][1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row][1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][0].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][1].value).toBeGreaterThan(0);
+                }
+                else if (col === lastCol) {
+                    expect(boardByRow[row - 1][lastCol - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row - 1][lastCol].value).toBeGreaterThan(0);
+                    expect(boardByRow[row][lastCol - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][lastCol - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][lastCol].value).toBeGreaterThan(0);
+                }
+                else {
+                    expect(boardByRow[row - 1][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row - 1][col].value).toBeGreaterThan(0);
+                    expect(boardByRow[row - 1][col + 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row][col + 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][col - 1].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][col].value).toBeGreaterThan(0);
+                    expect(boardByRow[row + 1][col + 1].value).toBeGreaterThan(0);
+                };
+            };
         };
     };
-    
-    for (let i = 0; i < boardByRow.length; i++) {
-        for (let j = 0; j < boardByRow[i].length; j++) {
-            if (boardByRow[i][j].mine) {
-                if (cellExists(i - 1, j - 1)) expect(boardByRow[i - 1][j - 1].value).toBeGreaterThan(0);
-                if (cellExists(i - 1, j)) expect(boardByRow[i - 1][j].value).toBeGreaterThan(0);
-                if (cellExists(i - 1, j + 1)) expect(boardByRow[i - 1][j + 1]).toBeGreaterThan(0);
-                if (cellExists(i, j - 1)) expect(boardByRow[i][j - 1]).toBeGreaterThan(0);
-                if (cellExists(i, j + 1)) expect(boardByRow[i][j + 1]).toBeGreaterThan(0);
-                if (cellExists(i + 1, j - 1)) expect(boardByRow[i + 1][j - 1]).toBeGreaterThan(0);
-                if (cellExists(i + 1, j)) expect(boardByRow[i + 1][j]).toBeGreaterThan(0);
-                if (cellExists(i + 1, j + 1)) expect(boardByRow[i + 1][j]).toBeGreaterThan(0);
-            }
-        }
-    }
 };

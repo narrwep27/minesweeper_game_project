@@ -18,13 +18,15 @@ const countTopCenter = (cellsByRow: Cell[][]): number[] => {
     const [topRow, nextRow] = [cellsByRow[0], cellsByRow[1]];
     let allMineCounts: number[] = [];
 
-    for (let i = 1; i < topRow.length - 1; i++) {
+    for (let row = 1; row < topRow.length - 1; row++) {
         let mineCount = 0;
-        if (topRow[i - 1].mine) mineCount++;
-        if (topRow[i + 1].mine) mineCount++;
-        if (nextRow[i - 1].mine) mineCount++;
-        if (nextRow[i].mine) mineCount++;
-        if (nextRow[i + 1].mine) mineCount++;
+        
+        if (topRow[row - 1].mine) mineCount++;
+        if (topRow[row + 1].mine) mineCount++;
+        if (nextRow[row - 1].mine) mineCount++;
+        if (nextRow[row].mine) mineCount++;
+        if (nextRow[row + 1].mine) mineCount++;
+
         allMineCounts.push(mineCount);
     };
 
@@ -34,8 +36,8 @@ const countTopCenter = (cellsByRow: Cell[][]): number[] => {
 const countMidEdges = (cellsByRow: Cell[][]): number[][] => {
     let allEdgeCounts: number[][] = [];
 
-    for (let i = 1; i < cellsByRow.length - 1; i++) {
-        const [currentRow, aboveRow, nextRow] = [cellsByRow[i], cellsByRow[i - 1], cellsByRow[i + 1]];
+    for (let row = 1; row < cellsByRow.length - 1; row++) {
+        const [currentRow, aboveRow, nextRow] = [cellsByRow[row], cellsByRow[row - 1], cellsByRow[row + 1]];
         let [leftCount, rightCount, last] = [0, 0, currentRow.length - 1];
 
         if (aboveRow[0].mine) leftCount++;
@@ -58,22 +60,25 @@ const countMidEdges = (cellsByRow: Cell[][]): number[][] => {
 const countMidCenter = (cellsByRow: Cell[][]): number[][] => {
     let allMidCounts: number[][] = [];
 
-    for (let i = 1; i < cellsByRow.length - 1; i++) {
-        const [currentRow, aboveRow, nextRow] = [cellsByRow[i], cellsByRow[i - 1], cellsByRow[i + 1]];
+    for (let row = 1; row < cellsByRow.length - 1; row++) {
+        const [currentRow, aboveRow, nextRow] = [cellsByRow[row], cellsByRow[row - 1], cellsByRow[row + 1]];
         let rowCounts: number[] = [];
 
-        for (let j = 1; currentRow.length - 1; j++) {
+        for (let col = 1; col < currentRow.length - 1; col++) {
             let mineCount = 0;
-            if (aboveRow[j - 1].mine) mineCount++;
-            if (aboveRow[j].mine) mineCount++;
-            if (aboveRow[j + 1].mine) mineCount++;
-            if (currentRow[j - 1].mine) mineCount++;
-            if (currentRow[j + 1].mine) mineCount++;
-            if (nextRow[j - 1].mine) mineCount++;
-            if (nextRow[j].mine) mineCount++;
-            if (nextRow[j + 1].mine) mineCount++;
+
+            if (aboveRow[col - 1].mine) mineCount++;
+            if (aboveRow[col].mine) mineCount++;
+            if (aboveRow[col + 1].mine) mineCount++;
+            if (currentRow[col - 1].mine) mineCount++;
+            if (currentRow[col + 1].mine) mineCount++;
+            if (nextRow[col - 1].mine) mineCount++;
+            if (nextRow[col].mine) mineCount++;
+            if (nextRow[col + 1].mine) mineCount++;
+
             rowCounts.push(mineCount);
         };
+
         allMidCounts.push(rowCounts);
     };
 
@@ -98,13 +103,15 @@ const countBotCenter = (cellsByRow: Cell[][]): number[] => {
     const [botRow, aboveRow] = [cellsByRow[cellsByRow.length - 1], cellsByRow[cellsByRow.length - 2]];
     let allMineCounts: number[] = [];
 
-    for (let i = 1; i < botRow.length - 1; i++) {
+    for (let row = 1; row < botRow.length - 1; row++) {
         let mineCount = 0;
-        if (aboveRow[i - 1].mine) mineCount++;
-        if (aboveRow[i].mine) mineCount++;
-        if (aboveRow[i + 1].mine) mineCount++;
-        if (botRow[i - 1].mine) mineCount++;
-        if (botRow[i + 1].mine) mineCount++;
+
+        if (aboveRow[row - 1].mine) mineCount++;
+        if (aboveRow[row].mine) mineCount++;
+        if (aboveRow[row + 1].mine) mineCount++;
+        if (botRow[row - 1].mine) mineCount++;
+        if (botRow[row + 1].mine) mineCount++;
+
         allMineCounts.push(mineCount);
     };
 
@@ -121,8 +128,8 @@ const getAllMineCounts = (cellsByRow: Cell[][]): number[][]=> {
 
     let topRowCounts = [topCornerCounts[0], ...topCenterCounts, topCornerCounts[1]];
     let allMidRowCounts: number[][] = [];
-    for (let i = 0; i < midEdgeCounts.length; i++) {
-        let rowCounts = [midEdgeCounts[i][0], ...midCenterCounts[i], midEdgeCounts[i][1]];
+    for (let row = 0; row < midEdgeCounts.length; row++) {
+        let rowCounts = [midEdgeCounts[row][0], ...midCenterCounts[row], midEdgeCounts[row][1]];
         allMidRowCounts.push(rowCounts);
     };
     let botRowCounts = [botCornerCounts[0], ...botCenterCounts, botCornerCounts[1]];

@@ -1,8 +1,13 @@
 import Cell from "../models/Cell";
+import Mode from "../models/Mode";
 import getAllMineCounts from "./MineCalculator";
 
-export const getRandIntMaxExclusive = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min) + min);
+export const getRandIndForMode = (mode: Mode | number): number => {
+    if (mode === Mode.Beginner || mode === 81) return Math.floor(Math.random() * 81);
+    if (mode === Mode.Intermediate || mode === 256) return Math.floor(Math.random() * 256);
+    if (mode === Mode.Expert || mode === 480) return Math.floor(Math.random() * 480);
+
+    throw new Error('Mode needs to be provided in getRandIndForMode function.');
 }
 
 export const setMines = (startInd: number, gameBoard: Cell[]): void => {
@@ -11,11 +16,11 @@ export const setMines = (startInd: number, gameBoard: Cell[]): void => {
     else if (gameBoard.length === 256) mineCount = 40;
     else mineCount = 99;
 
-    let rng = getRandIntMaxExclusive(0, gameBoard.length);
+    let rng = getRandIndForMode(gameBoard.length);
 
     for (let i = 0; i < mineCount; i++) {
         while (rng === startInd || gameBoard[rng].mine) {
-            rng = getRandIntMaxExclusive(0, gameBoard.length);
+            rng = getRandIndForMode(gameBoard.length);
         };
         gameBoard[rng].mine = true;
     };
@@ -27,6 +32,6 @@ export const initializeMineCounts = (cellsByRow: Cell[][]): void => {
     for (let row = 0; row < cellsByRow.length; row++) {
         for (let col = 0; col < cellsByRow[row].length; col++) {
             cellsByRow[row][col].value = allCountsByRow[row][col];
-        }
-    }
+        };
+    };
 };

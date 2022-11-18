@@ -2,8 +2,11 @@ import Cell from "../../models/Cell";
 import Mode from "../../models/Mode";
 import { 
     createGameBoard,
-    orderCellsByRow
+    orderCellsByRow,
+    toggleFlag,
+    revealCellAndAdj
 } from "../../utils/GameBoardUtils";
+import { getRandIndForMode } from "../../utils/MineUtils";
 
 describe('GameBoardUtils', () => {
     test('createGameBoard returns expected cell length depending on mode', () => {
@@ -29,5 +32,28 @@ describe('GameBoardUtils', () => {
         const expBoard = orderCellsByRow(createGameBoard(Mode.Expert));
         expect(expBoard).toHaveLength(16);
         for (let row of expBoard) expect(row).toHaveLength(30);
+    });
+
+    test('toggleFlag toggles flag of specified cell', () => {
+        let rand = getRandIndForMode(Mode.Beginner);
+        const begBoard = createGameBoard(Mode.Beginner);
+        toggleFlag(begBoard[rand]);
+        expect(begBoard[rand].flagged).toBe(true);
+        toggleFlag(begBoard[rand]);
+        expect(begBoard[rand].flagged).toBe(false);
+
+        rand = getRandIndForMode(Mode.Intermediate);
+        const intBoard = createGameBoard(Mode.Intermediate);
+        toggleFlag(intBoard[rand]);
+        expect(intBoard[rand].flagged).toBe(true);
+        toggleFlag(intBoard[rand]);
+        expect(intBoard[rand].flagged).toBe(false);
+
+        rand = getRandIndForMode(Mode.Expert);
+        const expBoard = createGameBoard(Mode.Expert);
+        toggleFlag(expBoard[rand]);
+        expect(expBoard[rand].flagged).toBe(true);
+        toggleFlag(expBoard[rand]);
+        expect(expBoard[rand].flagged).toBe(false);
     });
 });
